@@ -8,6 +8,7 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0-SNAPSHOT"
 
     val appDependencies = Seq(
+      "org.seleniumhq.selenium" % "selenium-java" % "2.24.1"
       // Add your project dependencies here,
     )
 
