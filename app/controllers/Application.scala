@@ -25,6 +25,7 @@ object Application extends Controller {
   def ticket(id: String) = Action {
     val promiseOfSource = Akka.future {
       val driver = new HtmlUnitDriver()
+      driver.setJavascriptEnabled(true)
       driver.get("http://resnetservice.housing.ucsb.edu/")
       val login_source = driver.getPageSource
       driver.close()
