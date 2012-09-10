@@ -10,7 +10,7 @@ object Application extends Controller {
   
   def index = Action {
     val driver = new HtmlUnitDriver()
-    driver.get("http://mindflakes.com")
+    driver.get("http://resnetservice.housing.ucsb.edu/")
     Ok(driver.getPageSource)
   }
   
