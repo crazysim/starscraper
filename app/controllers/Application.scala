@@ -27,9 +27,10 @@ object Application extends Controller {
       val driver = new HtmlUnitDriver()
       driver.setJavascriptEnabled(true)
       driver.get("http://resnetservice.housing.ucsb.edu/")
-      val login_source = driver.getPageSource
+      driver.findElementByName("txtUserName")
+
       driver.close()
-      login_source
+      "Nothing"
     }
 
     AsyncResult {
