@@ -37,7 +37,7 @@ object Application extends Controller {
     driver.setJavascriptEnabled(true)
     driver.get("http://resnetservice.housing.ucsb.edu/")
     val username = current.configuration.getString("helpstar.username").getOrElse("None")
-    val password = current.configuration.getString("helpstar.username").getOrElse("None")
+    val password = current.configuration.getString("helpstar.password").getOrElse("None")
     driver.findElementByName("txtUserName").sendKeys(username)
     driver.findElementByName("txtPassword").sendKeys(password)
     driver.findElementByName("btnLogin").click()
