@@ -24,17 +24,7 @@ object Application extends Controller {
 
   def ticket(id: String) = Action {
     val promiseOfSource = Akka.future {
-      val driver = new HtmlUnitDriver()
-      driver.setJavascriptEnabled(true)
-      driver.get("http://resnetservice.housing.ucsb.edu/")
-      val username = current.configuration.getString("helpstar.username").getOrElse("None")
-      val password = current.configuration.getString("helpstar.username").getOrElse("None")
-      driver.findElementByName("txtUserName").sendKeys(username)
-      driver.findElementByName("txtPassword").sendKeys(password)
-      driver.findElementByName("btnLogin").click()
-      val src = driver.getPageSource
-      driver.close()
-      src
+      getTicket(id)
     }
 
     AsyncResult {
@@ -42,4 +32,17 @@ object Application extends Controller {
     }
   }
 
+  def getTicket(id: String): String = {
+    val driver = new HtmlUnitDriver()
+    driver.setJavascriptEnabled(true)
+    driver.get("http://resnetservice.housing.ucsb.edu/")
+    val username = current.configuration.getString("helpstar.username").getOrElse("None")
+    val password = current.configuration.getString("helpstar.username").getOrElse("None")
+    driver.findElementByName("txtUserName").sendKeys(username)
+    driver.findElementByName("txtPassword").sendKeys(password)
+    driver.findElementByName("btnLogin").click()
+    val src = driver.getPageSource
+    driver.close()
+    src
+  }
 }
