@@ -47,6 +47,6 @@ object Application extends Controller {
     driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs ")
     val udf_src = driver.getPageSource
     driver.close()
-    landing_src + request_src + udf_src
+    request_src + udf_src
   }
 }
