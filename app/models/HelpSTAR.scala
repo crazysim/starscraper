@@ -3,14 +3,15 @@ package models
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import play.api.Play._
 
-/**
- * Created with IntelliJ IDEA.
- * User: nelson
- * Date: 9/11/12
- * Time: 10:02 PM
- * To change this template use File | Settings | File Templates.
- */
-object HelpSTARScrape {
+case class Request(ref_num: Int, title: String, transactions: List[Transaction], user_def_fields: List[Field])
+
+case class Transaction(who: String, dept: String, time: String, memos: List[Memo])
+
+case class Memo(kind: String, what: String)
+
+case class Field(name: String, value: String)
+
+object HelpSTAR {
   def getTicket(id: String = "5432"): String = {
     val driver = new HtmlUnitDriver()
     driver.setJavascriptEnabled(true)

@@ -9,7 +9,7 @@ import play.api.Play.current
 import org.openqa.selenium._
 import org.openqa.selenium.htmlunit._
 
-import models.HelpSTARScrape.getTicket
+import models.HelpSTAR.getTicket
 
 object Application extends Controller {
 
