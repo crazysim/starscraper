@@ -7,7 +7,7 @@ case class Request(ref_num: Int, title: String, transactions: List[Transaction],
 
 case class Transaction(who: String, dept: String, time: String, memos: List[Memo])
 
-case class Memo(kind: String, what: String)
+case class Memo(kind: String, content: String)
 
 case class Field(name: String, value: String)
 
