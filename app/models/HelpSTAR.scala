@@ -3,13 +3,15 @@ package models
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import play.api.Play._
 
-case class Request(ref_num: Int, title: String, transactions: List[Transaction], user_def_fields: List[Field])
+case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: List[Property], user_defined_fields: List[UserDefinedField])
 
 case class Transaction(who: String, dept: String, time: String, memos: List[Memo])
 
+case class Property(name:String, value: String)
+
 case class Memo(kind: String, content: String)
 
-case class Field(name: String, value: String)
+case class UserDefinedField(name: String, value: String)
 
 object HelpSTAR {
   def getTicket(id: String = "5432"): String = {
