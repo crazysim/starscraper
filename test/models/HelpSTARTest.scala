@@ -10,8 +10,8 @@ import scala.xml._
 
 class HelpSTARTest extends Specification {
 
-  "File Parsing" should {
-    "parse details" in {
+  "Detail Parsing" should {
+    "parse example details to not be empty" in {
       val is = getClass.getResourceAsStream("details.html")
       val html = HelpSTAR.readDirtyHTMLInputSteam(is)
       val properties = HelpSTAR.parseDetails(html)
