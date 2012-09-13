@@ -3,7 +3,7 @@ package models
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import play.api.Play._
 import play.api.http
-import java.io.InputStream
+import java.io.{InputStreamReader, InputStream}
 import xml.NodeSeq
 
 case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: List[Property], user_defined_fields: List[UserDefinedField])
@@ -37,6 +37,9 @@ object HelpSTAR {
   }
 
   def readDirtyHTMLInputSteam(in: InputStream) = {
-    Unit
+    val sax_parser = (new org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl).newSAXParser()
+    val in = new org.xml.sax.InputSource(new InputStreamReader(getClass.getResourceAsStream("details.html")))
+    val adapter = new scala.xml.parsing.NoBindingFactoryAdapter
+    adapter.loadXML(in, sax_parser)
   }
 }
