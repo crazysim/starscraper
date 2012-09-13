@@ -38,7 +38,7 @@ object HelpSTAR {
 
   def readDirtyHTMLInputSteam(in: InputStream) = {
     val sax_parser = (new org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl).newSAXParser()
-    val in = new org.xml.sax.InputSource(new InputStreamReader(getClass.getResourceAsStream("details.html")))
+    val in = new org.xml.sax.InputSource(new InputStreamReader(in))
     val adapter = new scala.xml.parsing.NoBindingFactoryAdapter
     adapter.loadXML(in, sax_parser)
   }
