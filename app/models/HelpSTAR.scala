@@ -6,7 +6,7 @@ import play.api.http
 
 case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: List[Property], user_defined_fields: List[UserDefinedField])
 
-case class Transaction(who: String, dept: String, time: String, memos: List[Memo])
+case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
 case class Property(name:String, value: String)
 
