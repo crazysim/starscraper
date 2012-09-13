@@ -3,6 +3,8 @@ import org.specs2.mutable._
 import play.api.test._
 import play.api.test.Helpers._
 
+import scala.xml._
+
 class HelpSTARTest extends Specification {
 
   "The 'Hello world' string" should {
@@ -20,6 +22,10 @@ class HelpSTARTest extends Specification {
   "File loading" should {
     "load details from getresource" in {
       "Getting detail.html from getclass" ! (null != getClass.getResource("details.html"))
+    }
+    "Load details as Scala XML" in {
+      val data  = XML.loadFile(getClass.getResource("details.html"))
+      "true" ! true
     }
   }
 }
