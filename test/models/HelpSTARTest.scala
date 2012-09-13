@@ -1,3 +1,4 @@
+import java.io.InputStreamReader
 import org.specs2.mutable._
 
 import play.api.test._
@@ -9,7 +10,7 @@ class HelpSTARTest extends Specification {
 
   "The 'Hello world' string" should {
     "contain 11 characters" in {
-      "Hello world" must have size(11)
+      "Hello world" must have size (11)
     }
     "start with 'Hello'" in {
       "Hello world" must startWith("Hello")
@@ -24,7 +25,11 @@ class HelpSTARTest extends Specification {
       "Getting detail.html from getclass" ! (null != getClass.getResource("details.html"))
     }
     "Load details as Scala XML" in {
-      val data  = XML.loadFile(getClass.getResource("details.html"))
+      val saxparser = (new org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl).newSAXParser()
+      val inputsource = new org.xml.sax.InputSource(new InputStreamReader(getClass.getResourceAsStream("details.html")))
+      val adapter = new scala.xml.parsing.NoBindingFactoryAdapter
+      adapter.loadXML(inputsource, saxparser)
+
       "true" ! true
     }
   }
