@@ -6,13 +6,12 @@ import play.api.http
 import java.io.{InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
 
-case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: Map[String, String], user_defined_fields: List[UserDefinedField])
+case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: Map[String, String], user_defined_fields: Map[String, String])
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
 case class Memo(kind: String, content: String)
 
-case class UserDefinedField(name: String, value: String)
 
 object HelpSTAR {
   def getTicket(id: String = "5432"): String = {
@@ -49,8 +48,8 @@ object HelpSTAR {
     List[Transaction]()
   }
 
-  def parseUDF(in: Node): List[UserDefinedField] = {
-    List[UserDefinedField]()
+  def parseUDF(in: Node): Map[String, String] = {
+    Map[String, String]()
   }
 
 }
