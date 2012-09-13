@@ -16,4 +16,10 @@ class HelpSTARTest extends Specification {
       "Hello world" must endWith("world")
     }
   }
+
+  "File loading" should {
+    "load details from getresource" in {
+      "Getting detail.html from getclass" ! (null != getClass.getResource("details.html"))
+    }
+  }
 }
