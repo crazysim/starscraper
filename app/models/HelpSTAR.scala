@@ -6,11 +6,9 @@ import play.api.http
 import java.io.{InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
 
-case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: List[Property], user_defined_fields: List[UserDefinedField])
+case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: Map[String, String], user_defined_fields: List[UserDefinedField])
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
-
-case class Property(name:String, value: String)
 
 case class Memo(kind: String, content: String)
 
@@ -26,9 +24,9 @@ object HelpSTAR {
     driver.findElementByName("txtUserName").sendKeys(username)
     driver.findElementByName("txtPassword").sendKeys(password)
     driver.findElementByName("btnLogin").click()
-    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId="+ id + "&TabTobeLoaded=tabTransactions&LoadPartially=0&Preview=1")
+    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&TabTobeLoaded=tabTransactions&LoadPartially=0&Preview=1")
     val transactions_src = driver.getPageSource
-    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId="+id+"&TabTobeLoaded=tabRequestProperties")
+    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&TabTobeLoaded=tabRequestProperties")
     val details_src = driver.getPageSource
     driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs ")
     val udf_src = driver.getPageSource
@@ -43,8 +41,8 @@ object HelpSTAR {
     adapter.loadXML(in, sax_parser)
   }
 
-  def parseDetails(in: Node): List[Property] = {
-    List[Property]()
+  def parseDetails(in: Node): Map[String, String] = {
+    Map[String, String]()
   }
 
   def parseTransactions(in: Node): List[Transaction] = {
