@@ -43,7 +43,7 @@ object HelpSTAR {
     adapter.loadXML(in, sax_parser)
   }
 
-  def parseProperties(in: Node): List[Property] = {
+  def parseDetails(in: Node): List[Property] = {
     List[Property]()
   }
 

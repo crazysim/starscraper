@@ -1,4 +1,5 @@
 import java.io.InputStreamReader
+import models.HelpSTAR
 import org.specs2.mutable._
 
 import play.api.test._
@@ -10,8 +11,11 @@ import scala.xml._
 class HelpSTARTest extends Specification {
 
   "File Parsing" should {
-    "parse properties" in {
-      "Hello world" must have size(11)
+    "parse details" in {
+      val is = getClass.getResourceAsStream("details.html")
+      val html = HelpSTAR.readDirtyHTMLInputSteam(is)
+      val properties = HelpSTAR.parseDetails(html)
+      (properties must not).beEmpty
     }
 //    "parse transactions" in {
 //      "Hello world" must startWith("Hello")
