@@ -3,6 +3,7 @@ import org.specs2.mutable._
 
 import play.api.test._
 import play.api.test.Helpers._
+import models.HelpSTAR._
 
 import scala.xml._
 
@@ -20,12 +21,9 @@ class HelpSTARTest extends Specification {
     }
   }
 
-  "File loading" should {
-    "load details from getresource" in {
-      "Getting detail.html from getclass" ! (null != getClass.getResource("details.html"))
-    }
-    "Load details as Scala XML" in {
-      "true" ! true
-    }
-  }
+//  "File loading" should {
+//    "Load Nasty XML" in {
+//      readDirtyHTMLInputSteam(getClass.getResourceAsStream("details.html")) must \\(<html/>)
+//    }
+//  }
 }

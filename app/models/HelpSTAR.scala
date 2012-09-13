@@ -42,4 +42,8 @@ object HelpSTAR {
     val adapter = new scala.xml.parsing.NoBindingFactoryAdapter
     adapter.loadXML(in, sax_parser)
   }
+
+  def parseProperties(in: Node) = {
+    Unit
+  }
 }
