@@ -10,7 +10,7 @@ object ApplicationBuild extends Build {
     val appDependencies = Seq(
       // Add your project dependencies here,
       "org.seleniumhq.selenium" % "selenium-java" % "2.24.1",
-      "org.ccil.cowan.tagsoup" % "tagsoup" % "1.2"
+      "org.ccil.cowan.tagsoup" % "tagsoup" % "1.2.1"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
