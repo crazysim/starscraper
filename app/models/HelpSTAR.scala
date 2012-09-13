@@ -3,6 +3,8 @@ package models
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import play.api.Play._
 import play.api.http
+import java.io.InputStream
+import xml.NodeSeq
 
 case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: List[Property], user_defined_fields: List[UserDefinedField])
 
@@ -32,5 +34,9 @@ object HelpSTAR {
     val udf_src = driver.getPageSource
     driver.close()
     transactions_src + details_src + udf_src
+  }
+
+  def readDirtyHTMLInputSteam(in: InputStream) = {
+    Unit
   }
 }
