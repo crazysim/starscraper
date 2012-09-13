@@ -23,7 +23,8 @@ object HelpSTAR {
     driver.findElementByName("txtUserName").sendKeys(username)
     driver.findElementByName("txtPassword").sendKeys(password)
     driver.findElementByName("btnLogin").click()
-    val landing_src = driver.getPageSource
+    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId="+ id + "&TabTobeLoaded=tabTransactions&LoadPartially=0&Preview=1")
+    val transaction_src = driver.getPageSource
     driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabTransactions&OrderBy=undefined&MemoId=undefined&Preview=0")
     val request_src = driver.getPageSource
     driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs ")
