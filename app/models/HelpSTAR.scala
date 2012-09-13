@@ -2,6 +2,7 @@ package models
 
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import play.api.Play._
+import play.api.http
 
 case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: List[Property], user_defined_fields: List[UserDefinedField])
 
@@ -24,12 +25,12 @@ object HelpSTAR {
     driver.findElementByName("txtPassword").sendKeys(password)
     driver.findElementByName("btnLogin").click()
     driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId="+ id + "&TabTobeLoaded=tabTransactions&LoadPartially=0&Preview=1")
-    val transaction_src = driver.getPageSource
-    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabTransactions&OrderBy=undefined&MemoId=undefined&Preview=0")
-    val request_src = driver.getPageSource
+    val transactions_src = driver.getPageSource
+    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId="+id+"&TabTobeLoaded=tabRequestProperties")
+    val details_src = driver.getPageSource
     driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs ")
     val udf_src = driver.getPageSource
     driver.close()
-    request_src + udf_src
+    transactions_src + details_src + udf_src
   }
 }
