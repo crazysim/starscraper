@@ -36,9 +36,9 @@ object HelpSTAR {
     transactions_src + details_src + udf_src
   }
 
-  def readDirtyHTMLInputSteam(in: InputStream) = {
+  def readDirtyHTMLInputSteam(is: InputStream) = {
     val sax_parser = (new org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl).newSAXParser()
-    val in = new org.xml.sax.InputSource(new InputStreamReader(in))
+    val in = new org.xml.sax.InputSource(new InputStreamReader(is))
     val adapter = new scala.xml.parsing.NoBindingFactoryAdapter
     adapter.loadXML(in, sax_parser)
   }

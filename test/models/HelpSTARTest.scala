@@ -25,11 +25,6 @@ class HelpSTARTest extends Specification {
       "Getting detail.html from getclass" ! (null != getClass.getResource("details.html"))
     }
     "Load details as Scala XML" in {
-      val saxparser = (new org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl).newSAXParser()
-      val inputsource = new org.xml.sax.InputSource(new InputStreamReader(getClass.getResourceAsStream("details.html")))
-      val adapter = new scala.xml.parsing.NoBindingFactoryAdapter
-      adapter.loadXML(inputsource, saxparser)
-
       "true" ! true
     }
   }
