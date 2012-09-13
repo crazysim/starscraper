@@ -43,7 +43,16 @@ object HelpSTAR {
     adapter.loadXML(in, sax_parser)
   }
 
-  def parseProperties(in: Node) = {
-    Unit
+  def parseProperties(in: Node): List[Property] = {
+    List[Property]()
   }
+
+  def parseTransactions(in: Node): List[Transaction] = {
+    List[Transaction]()
+  }
+
+  def parseUDF(in: Node): List[UserDefinedField] = {
+    List[UserDefinedField]()
+  }
+
 }
