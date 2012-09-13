@@ -12,9 +12,7 @@ class HelpSTARTest extends Specification {
 
   "Detail Parsing" should {
     "parse example details to not be empty" in {
-      val is = getClass.getResourceAsStream("details.html")
-      val html = HelpSTAR.readDirtyHTMLInputSteam(is)
-      val properties = HelpSTAR.parseDetails(html)
+      val properties = HelpSTAR.parseDetails(details_HTML)
       (properties must not).beEmpty
     }
 //    "parse transactions" in {
@@ -23,5 +21,10 @@ class HelpSTARTest extends Specification {
 //    "parse UDFs" in {
 //      "Hello world" must endWith("world")
 //    }
+  }
+
+  def details_HTML = {
+    val is = getClass.getResourceAsStream("details.html")
+    HelpSTAR.readDirtyHTMLInputSteam(is)
   }
 }
