@@ -67,7 +67,12 @@ object HelpSTAR {
   }
 
   def parseTransactions(in: Node): List[Transaction] = {
+    val memo_table = (in \\ "table")(0).child.drop(1)
     List[Transaction]()
+  }
+
+  def parseMemo(in: Node): Memo = {
+    Memo("n","n")
   }
 
   def parseUDF(in: Node): ListMap[String, String] = {
