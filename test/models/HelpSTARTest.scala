@@ -15,6 +15,10 @@ class HelpSTARTest extends Specification {
       val properties = HelpSTAR.parseDetails(details_HTML)
       properties.size must_!= 0
     }
+    "parse example title is Cannot Register with Given Perm & PW" in {
+      val properties = HelpSTAR.parseDetails(details_HTML)
+      properties("Title") mustEqual("Cannot Register with Given Perm & PW")
+    }
 //    "parse transactions" in {
 //      "Hello world" must startWith("Hello")
 //    }
