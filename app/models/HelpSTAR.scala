@@ -5,8 +5,9 @@ import play.api.Play._
 import play.api.http
 import java.io.{InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
+import collection.immutable.ListMap
 
-case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: Map[String, String], user_defined_fields: Map[String, String])
+case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String])
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
@@ -40,7 +41,7 @@ object HelpSTAR {
     adapter.loadXML(in, sax_parser)
   }
 
-  def parseDetails(in: Node): Map[String, String] = {
+  def parseDetails(in: Node): ListMap[String, String] = {
     // Get the number and title
     val number_and_title = ((in \\ "tr" head) \\ "b").map(_.text)
     val number = number_and_title(0)
@@ -53,10 +54,15 @@ object HelpSTAR {
           case _ => false
         }
       )
+    val properties_map = properties_tr.map(node => {
+      val tds = node \\ "td"
+      (tds(0).text,tds(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim)
+    }
+    )
 
-    properties_tr(0).\\("td")(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim
+    //properties_tr(0).\\("td")(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim
 
-    Map[String, String](
+    ListMap[String, String](
       "Number" -> number,
       "Title" -> title
     )
@@ -66,8 +72,8 @@ object HelpSTAR {
     List[Transaction]()
   }
 
-  def parseUDF(in: Node): Map[String, String] = {
-    Map[String, String]()
+  def parseUDF(in: Node): ListMap[String, String] = {
+    ListMap[String, String]()
   }
 
 }
