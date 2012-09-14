@@ -41,7 +41,16 @@ object HelpSTAR {
   }
 
   def parseDetails(in: Node): Map[String, String] = {
-    Map[String, String]()
+    // Get the number and title
+    val number_and_title = ((in \\ "tr" head) \\ "b").map(_.text)
+    val number = number_and_title(0)
+    val title = number_and_title(1)
+    // Get the rest
+
+    Map[String, String](
+      "number" -> number,
+      "title" -> title
+    )
   }
 
   def parseTransactions(in: Node): List[Transaction] = {
