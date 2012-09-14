@@ -13,7 +13,7 @@ class HelpSTARTest extends Specification {
   "Detail Parsing" should {
     "parse example details to not be empty" in {
       val properties = HelpSTAR.parseDetails(details_HTML)
-      (properties must not).beEmpty
+      properties.size must_!= 0
     }
 //    "parse transactions" in {
 //      "Hello world" must startWith("Hello")
