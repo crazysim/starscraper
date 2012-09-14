@@ -46,6 +46,15 @@ object HelpSTAR {
     val number = number_and_title(0)
     val title = number_and_title(1)
     // Get the rest
+    val properties_tr =
+      ((in \\ "table" \\ "tr")(2) \\ "tr").filter(n =>
+        (n \ "td")(0).attribute("style") match {
+          case Some(style) => style.text.contains("font-weight:bold;")
+          case _ => false
+        }
+      )
+
+    properties_tr(0).\\("td")(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim
 
     Map[String, String](
       "Number" -> number,
