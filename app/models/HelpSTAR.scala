@@ -56,7 +56,7 @@ object HelpSTAR {
       )
     val properties_map = properties_tr.map(node => {
       val tds = node \\ "td"
-      (tds(0).text,tds(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim)
+      (tds(0).text.trim, tds(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim)
     }
     )
 
@@ -65,7 +65,7 @@ object HelpSTAR {
     ListMap[String, String](
       "Number" -> number,
       "Title" -> title
-    )
+    ) ++ properties_map
   }
 
   def parseTransactions(in: Node): List[Transaction] = {
