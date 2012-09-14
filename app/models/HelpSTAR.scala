@@ -67,7 +67,8 @@ object HelpSTAR {
   }
 
   def parseTransactions(in: Node): List[Transaction] = {
-    val memo_table = (in \\ "table")(0).child.drop(1)
+    val memo_table = (in \ "body" \ "table" \ "tr").drop(1)
+    (memo_table(0) \ "td" \ "div")(0)
     List[Transaction]()
   }
 
