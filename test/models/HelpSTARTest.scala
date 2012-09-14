@@ -17,14 +17,20 @@ class HelpSTARTest extends Specification {
     }
     "parse example title is Cannot Register with Given Perm & PW" in {
       val properties = HelpSTAR.parseDetails(details_HTML)
-      properties("Title") mustEqual("Cannot Register with Given Perm & PW")
+      properties("Title") mustEqual ("Cannot Register with Given Perm & PW")
     }
-//    "parse transactions" in {
-//      "Hello world" must startWith("Hello")
-//    }
-//    "parse UDFs" in {
-//      "Hello world" must endWith("world")
-//    }
+
+    "parse example number to 5432" in {
+      val properties = HelpSTAR.parseDetails(details_HTML)
+      properties("Number") mustEqual ("5432")
+    }
+
+    //    "parse transactions" in {
+    //      "Hello world" must startWith("Hello")
+    //    }
+    //    "parse UDFs" in {
+    //      "Hello world" must endWith("world")
+    //    }
   }
 
   def details_HTML = {
