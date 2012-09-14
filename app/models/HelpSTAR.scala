@@ -48,8 +48,8 @@ object HelpSTAR {
     // Get the rest
 
     Map[String, String](
-      "number" -> number,
-      "title" -> title
+      "Number" -> number,
+      "Title" -> title
     )
   }
 
