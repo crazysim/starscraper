@@ -25,7 +25,7 @@ class HelpSTARTest extends Specification {
       properties("Number") mustEqual ("5432")
     }
 
-    "parse example to a status of closed" in {
+    "parse example to a status that has Closed" in {
       val properties = HelpSTAR.parseDetails(details_HTML)
       properties("Status") must contain("Closed")
     }
