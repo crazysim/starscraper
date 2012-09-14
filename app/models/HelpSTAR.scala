@@ -56,11 +56,9 @@ object HelpSTAR {
       )
     val properties_map = properties_tr.map(node => {
       val tds = node \\ "td"
-      (tds(0).text.trim.dropRight(1), tds(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim)
-    }
-    )
-
-    //properties_tr(0).\\("td")(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim
+      (tds(0).text.trim.dropRight(1),
+        tds(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim)
+    })
 
     ListMap[String, String](
       "Number" -> number,
