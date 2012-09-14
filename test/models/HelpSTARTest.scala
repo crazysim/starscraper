@@ -41,7 +41,10 @@ class HelpSTARTest extends Specification {
   }
 
   "Transaction Parsing" should {
-    success
+    val transactions = HelpSTAR.parseTransactions(details_HTML)
+    "parse example transaction to not be empty" in {
+      transactions.size must_!= 0
+    }
   }
 
   def transactions_HTML = {
