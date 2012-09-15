@@ -109,16 +109,18 @@ object HelpSTAR {
     Memo(title, content)
   }
 
-  def parseUDF(in: Node): Seq[(String, String)] = {
+  def parseUDF(in: Node): ListMap[String, String] = {
     val tr_fields = (in \\ "tr").filter(n => {
-      ((n \ "td")(0) \ "@width").text.equals("25%")
+      val first_td = (n \ "td")(0)
+      (first_td \ "@width").text.equals("25%") &&
+      first_td.text.nonEmpty
     })
     tr_fields.map(n => {
       val field_name = (n \ "td")(0).text.trim.dropRight(1)
 
     })
 
-    Seq((String, String))
+    ListMap[String, String]()
   }
 
 }
