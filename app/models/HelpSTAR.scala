@@ -77,7 +77,8 @@ object HelpSTAR {
     val memo_users = memo_header \\ "a"
     memo_users.size match {
       case 0 => {
-        val name = (memo_header \\ "b").text.trim
+        val name = (memo_header \\ "b").text.
+          replace(Character.toString(160.asInstanceOf[Char]), " ").trim
         Transaction(name, "None", "No time", List[Memo]())
       }
       case 2 => {
