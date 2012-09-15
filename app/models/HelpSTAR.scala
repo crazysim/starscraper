@@ -67,9 +67,16 @@ object HelpSTAR {
   }
 
   def parseTransactions(in: Node): List[Transaction] = {
-    val memo_table = (in \ "body" \ "table" \ "tr").drop(1)
-    (memo_table(0) \ "td" \ "div")(0)
+    val transactions_table = (in \ "body" \ "table" \ "tr").drop(1)
+    val transaction_table = (transactions_table(0) \ "td" \ "div" \ "div")(0)
+    val memo_header = ((transaction_table \ "table" \ "tr")(1) \ "td" \ "table" \ "tr" \ "td") \\ "a"
+    val user = memo_header(0).text
+    val department = memo_header(0).text
     List[Transaction]()
+  }
+
+  def parseTransaction(in: Node): Transaction = {
+    Transaction("nobody","nodept", "nope", List[Memo]())
   }
 
   def parseMemo(in: Node): Memo = {
