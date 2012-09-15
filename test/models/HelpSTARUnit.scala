@@ -90,4 +90,8 @@ class HelpSTARUnit extends Specification {
   def transactions_HTML = {
     get_res_HTML("transactions.html")
   }
+
+  "User Defined Fields Parsing" should {
+    success
+  }
 }
