@@ -99,7 +99,7 @@ object HelpSTAR {
   }
 
   def parseMemo(in: NodeSeq): Memo = {
-    Memo("n", "n")
+    Memo("not implemented", "not implemented2")
   }
 
   def parseUDF(in: Node): ListMap[String, String] = {
