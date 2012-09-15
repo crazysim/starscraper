@@ -110,6 +110,9 @@ object HelpSTAR {
   }
 
   def parseUDF(in: Node): ListMap[String, String] = {
+    val tr_fields = (in \\ "tr").filter(n => {
+      ((n \ "td")(0) \ "@width").text.equals("25%")
+    })
     ListMap[String, String]()
   }
 
