@@ -84,7 +84,7 @@ object HelpSTAR {
         Transaction(user, department, "No time", List[Memo]())
       }
       case _ => {
-        Transaction("Unknown", "Unknown", "No time", List[Memo]())
+        Transaction(memo_header.text, "Unknown", "No time", List[Memo]())
       }
     }
 
