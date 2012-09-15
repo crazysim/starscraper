@@ -75,19 +75,20 @@ object HelpSTAR {
     val transaction_table = (in \ "td" \ "div" \ "div")(0)
     val memo_header = ((transaction_table \ "table" \ "tr")(1) \ "td" \ "table" \ "tr" \ "td")
     val memo_users = memo_header \\ "a"
+    val time = memo_header(1).text.trim
     memo_users.size match {
       case 0 => {
         val name = (memo_header \\ "b").text.
           replace(Character.toString(160.asInstanceOf[Char]), " ").trim
-        Transaction(name, "None", "No time", List[Memo]())
+        Transaction(name, "None", time, List[Memo]())
       }
       case 2 => {
         val user = memo_users(0).text.trim
         val department = memo_users(1).text.trim
-        Transaction(user, department, "No time", List[Memo]())
+        Transaction(user, department, time, List[Memo]())
       }
       case _ => {
-        Transaction(memo_header.text.trim, "Unknown", "No time", List[Memo]())
+        Transaction(memo_header.text.trim, "Unknown", time, List[Memo]())
       }
     }
 
