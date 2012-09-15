@@ -50,6 +50,10 @@ class HelpSTARTest extends Specification {
       transactions(0).who mustEqual  "Danny Phillips"
     }
 
+    "parse business rules transaction to Business Rule Service" in {
+      transactions(3).who mustEqual "Business Rule Service"
+    }
+
   }
 
   def transactions_HTML = {

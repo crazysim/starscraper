@@ -77,15 +77,16 @@ object HelpSTAR {
     val memo_users = memo_header \\ "a"
     memo_users.size match {
       case 0 => {
-        Transaction(memo_users.text, "None", "No time", List[Memo]())
+        val name = (memo_header \\ "b").text.trim
+        Transaction(name, "None", "No time", List[Memo]())
       }
       case 2 => {
-        val user = memo_users(0).text
-        val department = memo_users(1).text
+        val user = memo_users(0).text.trim
+        val department = memo_users(1).text.trim
         Transaction(user, department, "No time", List[Memo]())
       }
       case _ => {
-        Transaction(memo_users.text, "Unknown", "No time", List[Memo]())
+        Transaction(memo_header.text.trim, "Unknown", "No time", List[Memo]())
       }
     }
 
