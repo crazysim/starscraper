@@ -47,11 +47,19 @@ class HelpSTARTest extends Specification {
     }
 
     "parse last transaction's first user is Danny'" in {
-      transactions(0).who mustEqual  "Danny Phillips"
+      transactions(0).who mustEqual "Danny Phillips"
     }
 
     "parse last transaction to have one memo" in {
       transactions(0).memos.size mustEqual 1
+    }
+
+    "parse last transaction's memo to be a workflow" in {
+      transactions(0).memos(0).kind must contain("Workflow")
+    }
+
+    "parse last transaction's memo to contain closed in the content" in {
+      transactions(0).memos(0).content must contain("CLOSED")
     }
 
     "parse business rules transaction to Business Rule Service" in {
@@ -69,9 +77,6 @@ class HelpSTARTest extends Specification {
     "parse business rules transaction to have two memos" in {
       transactions(3).memos.size mustEqual 2
     }
-
-
-
 
   }
 
