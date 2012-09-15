@@ -42,12 +42,16 @@ class HelpSTARTest extends Specification {
 
   "Transaction Parsing" should {
     val transactions = HelpSTAR.parseTransactions(transactions_HTML)
-    "parse example transaction to not be empty" in {
+    "parse last transaction to not be empty" in {
       transactions.size must_!= 0
     }
 
-    "parse example transaction's first user is Danny'" in {
+    "parse last transaction's first user is Danny'" in {
       transactions(0).who mustEqual  "Danny Phillips"
+    }
+
+    "parse last transaction to have two memos" in {
+      transactions(0).memos.size mustEqual 1
     }
 
     "parse business rules transaction to Business Rule Service" in {
@@ -61,6 +65,12 @@ class HelpSTARTest extends Specification {
     "parse business rules transaction to correct time" in {
       transactions(3).time mustEqual "6/26/2012 8:24:29 AM"
     }
+
+    "parse business rules transaction to have two memos" in {
+      transactions(3).memos.size mustEqual 2
+    }
+
+
 
 
   }
