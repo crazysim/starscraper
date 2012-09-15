@@ -50,7 +50,7 @@ class HelpSTARTest extends Specification {
       transactions(0).who mustEqual  "Danny Phillips"
     }
 
-    "parse last transaction to have two memos" in {
+    "parse last transaction to have one memos" in {
       transactions(0).memos.size mustEqual 1
     }
 
