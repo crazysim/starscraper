@@ -14,7 +14,7 @@ case class Memo(kind: String, content: String)
 
 
 object HelpSTAR {
-  val char160 = Character.toString(160.asInstanceOf[Char])
+  final val nb_space = Character.toString(160.asInstanceOf[Char])
 
   def getTicket(id: String = "5432"): String = {
     val driver = new HtmlUnitDriver()
@@ -58,7 +58,7 @@ object HelpSTAR {
     val properties_map = properties_tr.map(node => {
       val tds = node \\ "td"
       (tds(0).text.trim.dropRight(1),
-        tds(1).text.replace(char160, " ").trim)
+        tds(1).text.replace(nb_space, " ").trim)
     })
 
     ListMap[String, String](
@@ -84,7 +84,7 @@ object HelpSTAR {
     memo_users.size match {
       case 0 => {
         val name = (memo_header \\ "b").text.
-          replace(char160, " ").trim
+          replace(nb_space, " ").trim
         Transaction(name, "None", time, memos)
       }
       case 2 => {
