@@ -101,8 +101,9 @@ object HelpSTAR {
   }
 
   def parseMemo(in: NodeSeq): Memo = {
-    val title = (in(0) \ "td")
-    Memo("not implemented", "not implemented2")
+    val title = ((in(0) \ "td") \ "b").text.trim
+    val content = (in(1) \ "td").toString()
+    Memo(title, content)
   }
 
   def parseUDF(in: Node): ListMap[String, String] = {
