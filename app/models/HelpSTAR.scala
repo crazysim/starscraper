@@ -73,8 +73,9 @@ object HelpSTAR {
 
   def parseTransaction(in: Node): Transaction = {
     val transaction_table = (in \ "td" \ "div" \ "div")(0)
-    val memo_header = ((transaction_table \ "table" \ "tr")(1) \ "td" \ "table" \ "tr" \ "td") \\ "a"
-    memo_header.size match {
+    val memo_header = ((transaction_table \ "table" \ "tr")(1) \ "td" \ "table" \ "tr" \ "td")
+    val memo_users = memo_header \\ "a"
+    memo_users.size match {
       case 0 => {
         Transaction(memo_header.text, "None", "No time", List[Memo]())
       }
