@@ -93,5 +93,8 @@ class HelpSTARUnit extends Specification {
     "Number of user defined fields is 0" in {
       user_defined_fields.size mustNotEqual 0
     }
+    "Perm number is 0000000" in {
+      user_defined_fields.getOrElse("Perm number", "N/A") mustEqual "0000000"
+    }
   }
 }
