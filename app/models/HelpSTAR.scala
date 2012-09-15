@@ -76,7 +76,10 @@ object HelpSTAR {
     val memo_header = ((transaction_table(0) \ "table" \ "tr")(1) \ "td" \ "table" \ "tr" \ "td")
     val memo_users = memo_header \\ "a"
     val time = memo_header(1).text.split("On:")(1).trim
-    val memos = List[Memo]()
+    val memos_tr = transaction_table(1) \ "table" \ "tr"
+    val memos = (for (ns <- (memos_tr.grouped(2))) yield (
+      parseMemo(ns)
+      )).toList
     memo_users.size match {
       case 0 => {
         val name = (memo_header \\ "b").text.
@@ -95,7 +98,7 @@ object HelpSTAR {
 
   }
 
-  def parseMemo(in: Node): Memo = {
+  def parseMemo(in: NodeSeq): Memo = {
     Memo("n", "n")
   }
 
