@@ -9,8 +9,9 @@ class HelpSTARUnit extends Specification {
     HelpSTAR.readDirtyHTMLInputSteam(is)
   }
 
+
   "Detail Parsing" should {
-    val properties = HelpSTAR.parseDetails(details_HTML)
+    val properties = HelpSTAR.parseDetails(get_res_HTML("details.html"))
     "parse example details to not be empty" in {
       properties.size must_!= 0
     }
@@ -34,12 +35,11 @@ class HelpSTARUnit extends Specification {
     //    }
   }
 
-  def details_HTML = {
-    get_res_HTML("details.html")
-  }
+
 
   "Transaction Parsing" should {
-    val transactions = HelpSTAR.parseTransactions(transactions_HTML)
+    val transactions = HelpSTAR.parseTransactions(get_res_HTML("transactions.html")
+    )
     "parse last transaction to not be empty" in {
       transactions.size must_!= 0
     }
@@ -87,9 +87,6 @@ class HelpSTARUnit extends Specification {
 
   }
 
-  def transactions_HTML = {
-    get_res_HTML("transactions.html")
-  }
 
   "User Defined Fields Parsing" should {
     success
