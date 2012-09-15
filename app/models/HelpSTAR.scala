@@ -5,9 +5,9 @@ import play.api.Play._
 import play.api.http
 import java.io.{InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
-import collection.immutable.ListMap
+import collection.immutable.{Seq, ListMap}
 
-case class Request(reference_number: Int, title: String, transactions: List[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String])
+case class Request(reference_number: Int, title: String, transactions: Seq[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String])
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
@@ -66,10 +66,9 @@ object HelpSTAR {
     ) ++ properties_map
   }
 
-  def parseTransactions(in: Node): List[Transaction] = {
+  def parseTransactions(in: Node): Seq[Transaction] = {
     val transactions_table = (in \ "body" \ "table" \ "tr").drop(1)
-    val transactions = transactions_table.map(parseTransaction(_))
-    List[Transaction]()
+    transactions_table.map(parseTransaction(_))
   }
 
   def parseTransaction(in: Node): Transaction = {
