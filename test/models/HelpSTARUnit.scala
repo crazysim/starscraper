@@ -9,9 +9,13 @@ class HelpSTARUnit extends Specification {
     HelpSTAR.readDirtyHTMLInputSteam(is)
   }
 
+  def get_ticket_HTML(id: Int, filename: String) = {
+    get_res_HTML("/tickets/" + id + "/" + filename)
+  }
+
 
   "Detail Parsing" should {
-    val properties = HelpSTAR.parseDetails(get_res_HTML("details.html"))
+    val properties = HelpSTAR.parseDetails(get_ticket_HTML(5432, "details.html"))
     "parse example details to not be empty" in {
       properties.size must_!= 0
     }
@@ -38,7 +42,7 @@ class HelpSTARUnit extends Specification {
 
 
   "Transaction Parsing" should {
-    val transactions = HelpSTAR.parseTransactions(get_res_HTML("transactions.html")
+    val transactions = HelpSTAR.parseTransactions(get_ticket_HTML(5432, "transactions.html")
     )
     "parse last transaction to not be empty" in {
       transactions.size must_!= 0
@@ -89,7 +93,7 @@ class HelpSTARUnit extends Specification {
 
 
   "User Defined Fields Parsing" should {
-    val user_defined_fields = HelpSTAR.parseUDF(get_res_HTML("udf.html"))
+    val user_defined_fields = HelpSTAR.parseUDF(get_ticket_HTML(5432, "udf.html"))
     "parse number of user defined fields to 0" in {
       user_defined_fields.size mustNotEqual 0
     }
