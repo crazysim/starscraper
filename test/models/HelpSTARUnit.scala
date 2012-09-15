@@ -8,7 +8,7 @@ import models.HelpSTAR._
 
 import scala.xml._
 
-class HelpSTARTest extends Specification {
+class HelpSTARUnit extends Specification {
 
   "Detail Parsing" should {
     val properties = HelpSTAR.parseDetails(details_HTML)
