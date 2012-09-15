@@ -15,6 +15,8 @@ case class Memo(kind: String, content: String)
 
 
 object HelpSTAR {
+  val char160 = Character.toString(160.asInstanceOf[Char])
+
   def getTicket(id: String = "5432"): String = {
     val driver = new HtmlUnitDriver()
     driver.setJavascriptEnabled(true)
@@ -57,7 +59,7 @@ object HelpSTAR {
     val properties_map = properties_tr.map(node => {
       val tds = node \\ "td"
       (tds(0).text.trim.dropRight(1),
-        tds(1).text.replace(Character.toString(160.asInstanceOf[Char]), " ").trim)
+        tds(1).text.replace(char160, " ").trim)
     })
 
     ListMap[String, String](
@@ -83,7 +85,7 @@ object HelpSTAR {
     memo_users.size match {
       case 0 => {
         val name = (memo_header \\ "b").text.
-          replace(Character.toString(160.asInstanceOf[Char]), " ").trim
+          replace(char160, " ").trim
         Transaction(name, "None", time, memos)
       }
       case 2 => {
@@ -99,6 +101,7 @@ object HelpSTAR {
   }
 
   def parseMemo(in: NodeSeq): Memo = {
+    val title = (in(0) \ "td")
     Memo("not implemented", "not implemented2")
   }
 
