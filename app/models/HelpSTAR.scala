@@ -75,7 +75,7 @@ object HelpSTAR {
     val transaction_table = (in \ "td" \ "div" \ "div")(0)
     val memo_header = ((transaction_table \ "table" \ "tr")(1) \ "td" \ "table" \ "tr" \ "td")
     val memo_users = memo_header \\ "a"
-    val time = memo_header(1).text.trim
+    val time = memo_header(1).text.split("On:")(1).trim
     memo_users.size match {
       case 0 => {
         val name = (memo_header \\ "b").text.

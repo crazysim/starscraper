@@ -54,6 +54,15 @@ class HelpSTARTest extends Specification {
       transactions(3).who mustEqual "Business Rule Service"
     }
 
+    "parse first example transaction to correct time" in {
+      transactions(0).time mustEqual "7/3/2012 2:11:07 PM"
+    }
+
+    "parse business rules transaction to correct time" in {
+      transactions(3).time mustEqual "6/26/2012 8:24:29 AM"
+    }
+
+
   }
 
   def transactions_HTML = {
