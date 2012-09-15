@@ -1,12 +1,6 @@
-import java.io.InputStreamReader
 import models.HelpSTAR
 import org.specs2.mutable._
 
-import play.api.test._
-import play.api.test.Helpers._
-import models.HelpSTAR._
-
-import scala.xml._
 
 class HelpSTARUnit extends Specification {
 

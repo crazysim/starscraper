@@ -2,7 +2,6 @@ package models
 
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import play.api.Play._
-import play.api.http
 import java.io.{InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
 import collection.immutable.{Seq, ListMap}
