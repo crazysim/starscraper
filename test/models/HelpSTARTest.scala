@@ -45,6 +45,11 @@ class HelpSTARTest extends Specification {
     "parse example transaction to not be empty" in {
       transactions.size must_!= 0
     }
+
+    "parse example transaction's first user is Danny'" in {
+      transactions(0).who mustEqual  "Danny Phillips"
+    }
+
   }
 
   def transactions_HTML = {
