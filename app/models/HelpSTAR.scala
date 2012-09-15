@@ -75,21 +75,21 @@ object HelpSTAR {
   def parseTransaction(in: Node): Transaction = {
     val transaction_table = (in \ "td" \ "div" \ "div")
     val memo_header = ((transaction_table(0) \ "table" \ "tr")(1) \ "td" \ "table" \ "tr" \ "td")
-    val memo_users = memo_header \\ "a"
+    val memo_header_entities = memo_header \\ "a"
     val time = memo_header(1).text.split("On:")(1).trim
     val memos_tr = transaction_table(1) \ "table" \ "tr"
     val memos = (for (ns <- (memos_tr.grouped(2))) yield (
       parseMemo(ns)
       )).toList
-    memo_users.size match {
+    memo_header_entities.size match {
       case 0 => {
         val name = (memo_header \\ "b").text.
           replace(nb_space, " ").trim
         Transaction(name, "None", time, memos)
       }
       case 2 => {
-        val user = memo_users(0).text.trim
-        val department = memo_users(1).text.trim
+        val user = memo_header_entities(0).text.trim
+        val department = memo_header_entities(1).text.trim
         Transaction(user, department, time, memos)
       }
       case _ => {
