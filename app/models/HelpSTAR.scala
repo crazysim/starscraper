@@ -116,7 +116,12 @@ object HelpSTAR {
       first_td.text.nonEmpty
     })
     tr_fields.map(n => {
-      val field_name = (n \ "td")(0).text.trim.dropRight(1)
+      val tds = (n \ "td")
+      val field_name = tds(0).text.trim.dropRight(1)
+      val field_value = tds(1).child(0) match {
+        case inp @ <input/> => {inp \ "@value"}.text
+        case _ => "Unknown"
+      }
 
     })
 
