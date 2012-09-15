@@ -74,13 +74,24 @@ object HelpSTAR {
   def parseTransaction(in: Node): Transaction = {
     val transaction_table = (in \ "td" \ "div" \ "div")(0)
     val memo_header = ((transaction_table \ "table" \ "tr")(1) \ "td" \ "table" \ "tr" \ "td") \\ "a"
-    //val user = memo_header(0).text
-    //val department = memo_header(1).text
-    Transaction("user","department", "No time", List[Memo]())
+    memo_header.size match {
+      case 0 => {
+        Transaction(memo_header.text, "None", "No time", List[Memo]())
+      }
+      case 2 => {
+        val user = memo_header(0).text
+        val department = memo_header(1).text
+        Transaction(user, department, "No time", List[Memo]())
+      }
+      case _ => {
+        Transaction("Unknown", "Unknown", "No time", List[Memo]())
+      }
+    }
+
   }
 
   def parseMemo(in: Node): Memo = {
-    Memo("n","n")
+    Memo("n", "n")
   }
 
   def parseUDF(in: Node): ListMap[String, String] = {
