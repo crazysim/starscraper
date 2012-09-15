@@ -89,6 +89,8 @@ class HelpSTARUnit extends Specification {
 
 
   "User Defined Fields Parsing" should {
-    success
+    "success" in {
+      success
+    }
   }
 }
