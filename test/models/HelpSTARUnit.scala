@@ -89,8 +89,9 @@ class HelpSTARUnit extends Specification {
 
 
   "User Defined Fields Parsing" should {
-    "success" in {
-      success
+    val user_defined_fields = HelpSTAR.parseUDF(get_res_HTML("udf.html"))
+    "Number of user defined fields is 0" in {
+      user_defined_fields.size mustNotEqual 0
     }
   }
 }
