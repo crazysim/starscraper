@@ -78,6 +78,15 @@ class HelpSTARTest extends Specification {
       transactions(3).memos.size mustEqual 2
     }
 
+    "parse first transaction to have two memos" in {
+      transactions.last.memos.size mustEqual 2
+    }
+
+    "parse first transaction to have a memo with Carreros in it" in {
+      transactions.last.memos.last.content must contain("Carreros")
+    }
+
+
   }
 
   def transactions_HTML = {
