@@ -4,6 +4,11 @@ import org.specs2.mutable._
 
 class HelpSTARUnit extends Specification {
 
+  def get_res_HTML(res: String) = {
+    val is = getClass.getResourceAsStream(res)
+    HelpSTAR.readDirtyHTMLInputSteam(is)
+  }
+
   "Detail Parsing" should {
     val properties = HelpSTAR.parseDetails(details_HTML)
     "parse example details to not be empty" in {
@@ -30,8 +35,7 @@ class HelpSTARUnit extends Specification {
   }
 
   def details_HTML = {
-    val is = getClass.getResourceAsStream("details.html")
-    HelpSTAR.readDirtyHTMLInputSteam(is)
+    get_res_HTML("details.html")
   }
 
   "Transaction Parsing" should {
@@ -84,7 +88,6 @@ class HelpSTARUnit extends Specification {
   }
 
   def transactions_HTML = {
-    val is = getClass.getResourceAsStream("transactions.html")
-    HelpSTAR.readDirtyHTMLInputSteam(is)
+    get_res_HTML("transactions.html")
   }
 }
