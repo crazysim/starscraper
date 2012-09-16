@@ -3,14 +3,27 @@ package controllers
 import play.api._
 import libs.concurrent.Akka
 import play.api.mvc._
+import play.api.data.Forms._
+import play.api.data._
+
 
 import play.api.Play.current
 import models.{NotFoundTicket, FoundTicket, Ticket}
 
 object Application extends Controller {
 
+  val searchForm = Form(
+    "id" -> nonEmptyText
+  )
+
+
   def index = Action {
+
     Ok(views.html.index())
+  }
+
+  def get_ticket = Action { r =>
+    Ok("")
   }
 
   def ticket(id: Int) = Action {
