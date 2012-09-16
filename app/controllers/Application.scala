@@ -9,8 +9,6 @@ import play.api.Play.current
 import org.openqa.selenium._
 import org.openqa.selenium.htmlunit._
 
-import models.HelpSTAR.getTicket
-
 object Application extends Controller {
 
   def index = Action {
@@ -24,15 +22,7 @@ object Application extends Controller {
     }
   }
 
-  def ticket(id: String) = Action {
-    val promiseOfSource = Akka.future {
-      getTicket(id)
-    }
-
-    AsyncResult {
-      promiseOfSource.map(s => Ok(s))
-    }
-  }
+  def ticket(id: String) = TODO
 
 
 }

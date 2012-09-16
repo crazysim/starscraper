@@ -2,9 +2,11 @@ package models
 
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import play.api.Play._
-import java.io.{InputStreamReader, InputStream}
+import java.io.{ByteArrayInputStream, InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
 import collection.immutable.{Seq, ListMap}
+
+case class RequestHTML(transactions_src: Node, details_src: Node, udf_src: Node)
 
 case class Request(transactions: Seq[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String]) {
   val number = properties.getOrElse("Number", "No Number?")
@@ -19,7 +21,7 @@ case class Memo(kind: String, content: String)
 object HelpSTAR {
   final val nb_space = Character.toString(160.asInstanceOf[Char])
 
-  def getTicket(id: String = "5432"): String = {
+  def getRequestHTML(id: String): RequestHTML = {
     val driver = new HtmlUnitDriver()
     driver.setJavascriptEnabled(true)
     driver.get("http://resnetservice.housing.ucsb.edu/")
@@ -35,7 +37,20 @@ object HelpSTAR {
     driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs ")
     val udf_src = driver.getPageSource
     driver.close()
-    transactions_src + details_src + udf_src
+
+    implicit def string2Node(str: String): Node = {
+      readDirtyHTMLInputSteam(new ByteArrayInputStream(str.getBytes("UTF-8")))
+    }
+
+    RequestHTML(transactions_src, details_src, udf_src)
+  }
+
+  def getRequest(id: String): Request = {
+    val req_html = getRequestHTML(id)
+    val transactions = parseTransactions(req_html.transactions_src)
+    val details = parseDetails(req_html.details_src)
+    val udf = parseUDF(req_html.udf_src)
+    Request(transactions, details, udf)
   }
 
   def readDirtyHTMLInputSteam(is: InputStream): Node = {
