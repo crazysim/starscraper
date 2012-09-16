@@ -10,10 +10,14 @@ import scala.Some
 
 case class RequestHTML(transactions_src: Node, details_src: Node, udf_src: Node)
 
-case class Request(transactions: Seq[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String]) {
+abstract class Request()
+
+case class FoundRequest(transactions: Seq[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String]) extends Request{
   val number = properties.getOrElse("Number", "No Number?")
   val title = properties.getOrElse("Title", "No Title?")
 }
+
+case class NotFoundRequest(id: String) extends Request
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
@@ -57,10 +61,16 @@ object HelpSTAR {
 
   def getRequest(id: String, username: String, password: String): Request = {
     val req_html = getRequestHTML(id, username, password)
-    val transactions = parseTransactions(req_html.transactions_src)
-    val details = parseDetails(req_html.details_src)
-    val udf = parseUDF(req_html.udf_src)
-    Request(transactions, details, udf)
+    req_html.transactions_src.text match {
+      case "" => NotFoundRequest(id)
+      case _ => {
+        val transactions = parseTransactions(req_html.transactions_src)
+        val details = parseDetails(req_html.details_src)
+        val udf = parseUDF(req_html.udf_src)
+        FoundRequest(transactions, details, udf)
+      }
+    }
+
   }
 
   def readDirtyHTMLInputSteam(is: InputStream): Node = {
