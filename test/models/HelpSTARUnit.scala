@@ -97,8 +97,8 @@ class HelpSTARUnit extends Specification {
     "parse number of user defined fields to 0" in {
       user_defined_fields.size mustNotEqual 0
     }
-    "parse Perm number to 0000000" in {
-      user_defined_fields.getOrElse("Perm number", "N/A") mustEqual "0000000"
+    "parse PERM Number to 0000000" in {
+      user_defined_fields.getOrElse("PERM Number", "N/A") mustEqual "0000000"
     }
 
     "parse Residence Hall or Apartment Building to San Clemente" in {
