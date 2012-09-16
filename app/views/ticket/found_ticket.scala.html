@@ -10,7 +10,7 @@
     @request.user_defined_fields.map { udf =>
         <p>@udf._1 - @udf._2</p>
     }
-    <h3>Transactions (Oldest First)</h3>
+    <h2>Transactions (Oldest First)</h2>
     @request.transactions.map { t =>
         <hr/>
         <h4>@t.who - @t.department - @t.time</h4>
