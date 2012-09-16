@@ -9,6 +9,7 @@ object ApplicationBuild extends Build {
 
     val appDependencies = Seq(
       // Add your project dependencies here,
+      "org.apache.httpcomponents" % "httpclient" % "4.2.1",
       "net.sourceforge.htmlunit" % "htmlunit" % "2.10",
       "org.ccil.cowan.tagsoup" % "tagsoup" % "1.2.1"
     )
