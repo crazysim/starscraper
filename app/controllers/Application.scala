@@ -13,15 +13,16 @@ import models.{NotFoundTicket, FoundTicket, Ticket}
 object Application extends Controller {
 
   val searchForm = Form(
-    "id" -> nonEmptyText
+    "id" -> number
   )
 
   def index = Action {
     Ok(views.html.index(searchForm))
   }
 
-  def get_ticket = Action { r =>
-    Redirect(routes.Application.ticket(5432))
+  def get_ticket = Action { implicit r =>
+    val id = searchForm.bindFromRequest.get
+    Redirect(routes.Application.ticket(id))
   }
 
   def ticket(id: Int) = Action {
