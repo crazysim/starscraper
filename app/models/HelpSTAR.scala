@@ -6,7 +6,10 @@ import java.io.{InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
 import collection.immutable.{Seq, ListMap}
 
-case class Request(reference_number: Int, title: String, transactions: Seq[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String])
+case class Request(transactions: Seq[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String]) {
+  val number = properties.getOrElse("Number", "No Number?")
+  val title = properties.getOrElse("Title", "No Title?")
+}
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
