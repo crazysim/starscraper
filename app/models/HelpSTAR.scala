@@ -25,7 +25,7 @@ object HelpSTAR {
 
   def getRequestHTML(id: String, username: String, password: String): RequestHTML = {
 //    val driver = new HtmlUnitDriver()
-    val client = new WebClient()
+val client = new WebClient()
     client.setJavaScriptEnabled(true)
     val login_page: HtmlPage = client.getPage("http://resnetservice.housing.ucsb.edu")
     val form: HtmlForm = login_page.getFormByName("frmLogin")
@@ -35,11 +35,14 @@ object HelpSTAR {
     password_input.setValueAttribute(password)
     val submit_input: HtmlSubmitInput = form.getInputByName("btnLogin")
     submit_input.click()
-    val transactions_src = client.getPage("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&TabTobeLoaded=tabTransactions&LoadPartially=0&Preview=1").getWebResponse.getContentAsString
+    val transactions_page: HtmlPage = client.getPage("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&TabTobeLoaded=tabTransactions&LoadPartially=0&Preview=1")
+    val transactions_src = transactions_page.getWebResponse.getContentAsString
 
-    val details_src = client.getPage("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&TabTobeLoaded=tabRequestProperties").getWebResponse.getContentAsString
+    val details_page: HtmlPage = client.getPage("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&TabTobeLoaded=tabRequestProperties")
+    val details_src = details_page.getWebResponse.getContentAsString
 
-    val udf_src = client.getPage("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs").getWebResponse.getContentAsString
+    val udf_page: HtmlPage = client.getPage("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs")
+    val udf_src = udf_page.getWebResponse.getContentAsString
 
 //    driver.setJavascriptEnabled(true)
 //    driver.get("http://resnetservice.housing.ucsb.edu/")
