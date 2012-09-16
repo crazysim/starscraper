@@ -1,6 +1,5 @@
 package models
 
-import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import play.api.Play._
 import java.io.{ByteArrayInputStream, InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
