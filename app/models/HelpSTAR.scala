@@ -5,7 +5,12 @@ import java.io.{ByteArrayInputStream, InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
 import collection.immutable.{Seq, ListMap}
 import com.gargoylesoftware.htmlunit.WebClient
-import com.gargoylesoftware.htmlunit.html.{HtmlSubmitInput, HtmlTextInput, HtmlForm, HtmlPage}
+import com.gargoylesoftware.htmlunit.html._
+import models.Transaction
+import models.RequestHTML
+import scala.Some
+import models.Memo
+import models.Request
 
 case class RequestHTML(transactions_src: Node, details_src: Node, udf_src: Node)
 
@@ -29,7 +34,7 @@ val client = new WebClient()
     val login_page: HtmlPage = client.getPage("http://resnetservice.housing.ucsb.edu")
     val form: HtmlForm = login_page.getFormByName("frmLogin")
     val username_input: HtmlTextInput = form.getInputByName("txtUserName")
-    val password_input: HtmlTextInput = form.getInputByName("txtPassword")
+    val password_input: HtmlPasswordInput = form.getInputByName("txtPassword")
     username_input.setValueAttribute(username)
     password_input.setValueAttribute(password)
     val submit_input: HtmlSubmitInput = form.getInputByName("btnLogin")
