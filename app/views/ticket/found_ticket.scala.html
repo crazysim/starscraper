@@ -12,10 +12,12 @@
     }
     <h3>Transactions (Oldest First)</h3>
     @request.transactions.map { t =>
+        <hr/>
         <h4>@t.who - @t.department - @t.time</h4>
         @t.memos.map { m =>
             <h5>@m.kind</h5>
             <p>@Html(m.content)</p>
         }
+        <hr/>
     }
 }
