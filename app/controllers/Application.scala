@@ -5,7 +5,7 @@ import libs.concurrent.Akka
 import play.api.mvc._
 import play.api.data.Forms._
 import play.api.data._
-
+import play.api.data.validation.Constraints._
 
 import play.api.Play.current
 import models.{NotFoundTicket, FoundTicket, Ticket}
@@ -13,7 +13,7 @@ import models.{NotFoundTicket, FoundTicket, Ticket}
 object Application extends Controller {
 
   val searchForm = Form(
-    "id" -> number
+    "id" -> number.verifying(min(0),max(999999))
   )
 
   def index = Action {
@@ -21,8 +21,10 @@ object Application extends Controller {
   }
 
   def get_ticket = Action { implicit r =>
-    val id = searchForm.bindFromRequest.get
-    Redirect(routes.Application.ticket(id))
+    searchForm.bindFromRequest().fold(
+      searchForm => BadRequest(views.html.index(searchForm)),
+      value => Redirect(routes.Application.ticket(value))
+    )
   }
 
   def ticket(id: Int) = Action {
