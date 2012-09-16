@@ -74,7 +74,8 @@ object HelpSTAR {
   }
 
   def getSampleTicket(id: Int): Ticket = {
-    val req_html = TicketHTML(get_ticket_HTML(id, "transactions.html"),
+    val req_html = TicketHTML(
+      get_ticket_HTML(id, "transactions.html"),
       get_ticket_HTML(id, "details.html"),
       get_ticket_HTML(id, "udf.html")
     )
