@@ -21,12 +21,12 @@ case class Memo(kind: String, content: String)
 object HelpSTAR {
   final val nb_space = Character.toString(160.asInstanceOf[Char])
 
-  def getRequestHTML(id: String): RequestHTML = {
+  def getRequestHTML(id: String, username: String, password: String): RequestHTML = {
     val driver = new HtmlUnitDriver()
     driver.setJavascriptEnabled(true)
     driver.get("http://resnetservice.housing.ucsb.edu/")
-    val username = current.configuration.getString("helpstar.username").getOrElse("None")
-    val password = current.configuration.getString("helpstar.password").getOrElse("None")
+//    val username = current.configuration.getString("helpstar.username").getOrElse("None")
+//    val password = current.configuration.getString("helpstar.password").getOrElse("None")
     driver.findElementByName("txtUserName").sendKeys(username)
     driver.findElementByName("txtPassword").sendKeys(password)
     driver.findElementByName("btnLogin").click()
@@ -46,8 +46,8 @@ object HelpSTAR {
     RequestHTML(transactions_src, details_src, udf_src)
   }
 
-  def getRequest(id: String): Request = {
-    val req_html = getRequestHTML(id)
+  def getRequest(id: String, username: String, password: String): Request = {
+    val req_html = getRequestHTML(id, username, password)
     val transactions = parseTransactions(req_html.transactions_src)
     val details = parseDetails(req_html.details_src)
     val udf = parseUDF(req_html.udf_src)

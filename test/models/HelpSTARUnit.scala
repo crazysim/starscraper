@@ -48,7 +48,7 @@ class HelpSTARUnit extends Specification {
       transactions.size must_!= 0
     }
 
-    "parse last transaction's first user is Danny'" in {
+    "parse last transaction's first username is Danny'" in {
       transactions(0).who mustEqual "Danny Phillips"
     }
 
@@ -94,7 +94,7 @@ class HelpSTARUnit extends Specification {
 
   "User Defined Fields Parsing" should {
     val user_defined_fields = HelpSTAR.parseUDF(get_ticket_HTML(5432, "udf.html"))
-    "parse number of user defined fields to 0" in {
+    "parse number of username defined fields to 0" in {
       user_defined_fields.size mustNotEqual 0
     }
     "parse PERM Number to 0000000" in {
