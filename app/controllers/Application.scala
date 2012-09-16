@@ -14,7 +14,7 @@ object Application extends Controller {
   def index = Action {
     val promiseOfSource = Akka.future {
       val driver = new HtmlUnitDriver()
-      driver.get("http://slickdeals.net/")
+      driver.get("http://google.com/")
       driver.getPageSource
     }
     AsyncResult {
