@@ -19,7 +19,7 @@ object Application extends Controller {
       models.HelpSTAR.getTicket(id, username, password)
     }
     AsyncResult {
-      promiseOfSource.map(r => present_ticket(r))
+      promiseOfSource.map(present_ticket(_))
     }
   }
 
@@ -28,7 +28,7 @@ object Application extends Controller {
       models.HelpSTAR.getSampleTicket(id)
     }
     AsyncResult {
-      promiseOfSource.map(r => present_ticket(r))
+      promiseOfSource.map(present_ticket(_))
     }
   }
 
