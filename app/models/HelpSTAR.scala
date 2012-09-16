@@ -28,8 +28,7 @@ object HelpSTAR {
   final val nb_space = Character.toString(160.asInstanceOf[Char])
 
   def getRequestHTML(id: String, username: String, password: String): RequestHTML = {
-//    val driver = new HtmlUnitDriver()
-val client = new WebClient()
+    val client = new WebClient()
     client.setJavaScriptEnabled(true)
     client.setThrowExceptionOnScriptError(false)
     val login_page: HtmlPage = client.getPage("http://resnetservice.housing.ucsb.edu")
@@ -50,21 +49,6 @@ val client = new WebClient()
     val udf_page: HtmlPage = client.getPage("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs")
     val udf_src = udf_page.getWebResponse.getContentAsString
 
-//    driver.setJavascriptEnabled(true)
-//    driver.get("http://resnetservice.housing.ucsb.edu/")
-////    val username = current.configuration.getString("helpstar.username").getOrElse("None")
-////    val password = current.configuration.getString("helpstar.password").getOrElse("None")
-//    driver.findElementByName("txtUserName").sendKeys(username)
-//    driver.findElementByName("txtPassword").sendKeys(password)
-//    driver.findElementByName("btnLogin").click()
-//    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&TabTobeLoaded=tabTransactions&LoadPartially=0&Preview=1")
-//    val transactions_src = driver.getPageSource
-//    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_RequestTemplate.aspx?requestId=" + id + "&TabTobeLoaded=tabRequestProperties")
-//    val details_src = driver.getPageSource
-//    driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs ")
-//    val udf_src = driver.getPageSource
-//    driver.setJavascriptEnabled(false)
-//    driver.close()
     client.setJavaScriptEnabled(false)
     client.closeAllWindows()
 
