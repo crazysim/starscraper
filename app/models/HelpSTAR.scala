@@ -127,10 +127,10 @@ object HelpSTAR {
         }
         case _ => "Unknown"
       }
-
+      (field_name, field_value)
     })
 
-    ListMap[String, String]()
+    ListMap[String, String]() ++ fields
   }
 
 }
