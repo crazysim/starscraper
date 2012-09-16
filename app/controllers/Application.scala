@@ -21,5 +21,15 @@ object Application extends Controller {
     }
   }
 
+  def test_ticket(id: Int) = Action {
+    val promiseOfSource = Akka.future {
+      models.HelpSTAR.getSampleRequest(id).toString
+    }
+    AsyncResult {
+      promiseOfSource.map(s => Ok(s))
+    }
+
+  }
+
 
 }
