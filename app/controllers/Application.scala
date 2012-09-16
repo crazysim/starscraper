@@ -23,14 +23,15 @@ object Application extends Controller {
   }
 
   def ticket(id: String) = Action {
-    val promiseOfSource = Akka.future {
+//    val promiseOfSource = Akka.future {
       val username = current.configuration.getString("helpstar.username").getOrElse("No Username")
       val password = current.configuration.getString("helpstar.password").getOrElse("No Username")
-      models.HelpSTAR.getRequest(id, username, password).toString
-    }
-    AsyncResult {
-      promiseOfSource.map(s => Ok(s))
-    }
+      val result = models.HelpSTAR.getRequest(id, username, password).toString
+    Ok(result)
+//    }
+//    AsyncResult {
+//      promiseOfSource.map(s => Ok(s))
+//    }
   }
 
 
