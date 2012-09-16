@@ -122,11 +122,8 @@ object HelpSTAR {
         case inp@ <input/> => {
           inp \ "@value"
         }.text
-        case sel@ <select/> => {
-          sel.child match {
-            case opt@ <option/> if (opt \ "@selected").text.equals("selected") => opt.text
-            case _ => "None Selected"
-          }
+        case sel@ <select>{b @ _*}</select> => {
+          sel.child.filter(n => (n \ "@selected").nonEmpty)(0).text
         }
         case _ => "Unknown"
       }
