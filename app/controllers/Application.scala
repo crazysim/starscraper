@@ -15,10 +15,15 @@ object Application extends Controller {
     val promiseOfSource = Akka.future {
       val username = current.configuration.getString("helpstar.username").getOrElse("No Username")
       val password = current.configuration.getString("helpstar.password").getOrElse("No Username")
-      models.HelpSTAR.getRequest(id, username, password).toString
+      models.HelpSTAR.getRequest(id, username, password)
     }
     AsyncResult {
-      promiseOfSource.map(s => Ok(s))
+      promiseOfSource.map(s =>
+        s match {
+          case f: FoundRequest => Ok(views.html.ticket.index(f))
+          case _ => BadRequest
+        }
+      )
     }
   }
 
