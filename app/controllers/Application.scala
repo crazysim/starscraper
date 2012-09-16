@@ -18,12 +18,7 @@ object Application extends Controller {
       models.HelpSTAR.getRequest(id, username, password)
     }
     AsyncResult {
-      promiseOfSource.map(s =>
-        s match {
-          case f: FoundRequest => Ok(views.html.ticket.index(f))
-          case _ => BadRequest
-        }
-      )
+      promiseOfSource.map(r => present_ticket(r))
     }
   }
 
@@ -32,12 +27,14 @@ object Application extends Controller {
       models.HelpSTAR.getSampleRequest(id)
     }
     AsyncResult {
-      promiseOfSource.map(s =>
-        s match {
-          case f: FoundRequest => Ok(views.html.ticket.index(f))
-          case _ => BadRequest
-        }
-      )
+      promiseOfSource.map(r => present_ticket(r))
+    }
+  }
+
+  def present_ticket(s: models.Request) = {
+    s match {
+      case f: FoundRequest => Ok(views.html.ticket.found_request(f))
+      case _ => BadRequest
     }
   }
 
