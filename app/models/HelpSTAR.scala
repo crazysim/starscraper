@@ -8,16 +8,16 @@ import com.gargoylesoftware.htmlunit.html._
 import scala.Some
 
 
-case class RequestHTML(transactions_src: Node, details_src: Node, udf_src: Node)
+case class TicketHTML(transactions_src: Node, details_src: Node, udf_src: Node)
 
-abstract class Request()
+abstract class Ticket()
 
-case class FoundRequest(transactions: Seq[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String]) extends Request{
+case class FoundTicket(transactions: Seq[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String]) extends Ticket{
   val number = properties.getOrElse("Number", "No Number?")
   val title = properties.getOrElse("Title", "No Title?")
 }
 
-case class NotFoundRequest(number: Int) extends Request
+case class NotFoundTicket(number: Int) extends Ticket
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
@@ -27,7 +27,7 @@ case class Memo(kind: String, content: String)
 object HelpSTAR {
   final val nb_space = Character.toString(160.asInstanceOf[Char])
 
-  def getRequestHTML(id: Int, username: String, password: String): RequestHTML = {
+  def getTicketHTML(id: Int, username: String, password: String): TicketHTML = {
     val client = new WebClient()
     client.setJavaScriptEnabled(true)
     client.setThrowExceptionOnScriptError(false)
@@ -56,32 +56,32 @@ object HelpSTAR {
       readDirtyHTMLInputSteam(new ByteArrayInputStream(str.getBytes("UTF-8")))
     }
 
-    RequestHTML(transactions_src, details_src, udf_src)
+    TicketHTML(transactions_src, details_src, udf_src)
   }
 
-  def getRequest(id: Int, username: String, password: String): Request = {
-    val req_html = getRequestHTML(id, username, password)
+  def getTicket(id: Int, username: String, password: String): Ticket = {
+    val req_html = getTicketHTML(id, username, password)
     req_html.details_src.text match {
-      case "" => NotFoundRequest(id)
+      case "" => NotFoundTicket(id)
       case _ => {
         val transactions = parseTransactions(req_html.transactions_src)
         val details = parseDetails(req_html.details_src)
         val udf = parseUDF(req_html.udf_src)
-        FoundRequest(transactions, details, udf)
+        FoundTicket(transactions, details, udf)
       }
     }
 
   }
 
-  def getSampleRequest(id: Int): Request = {
-    val req_html = RequestHTML(get_ticket_HTML(id, "transactions.html"),
+  def getSampleTicket(id: Int): Ticket = {
+    val req_html = TicketHTML(get_ticket_HTML(id, "transactions.html"),
       get_ticket_HTML(id, "details.html"),
       get_ticket_HTML(id, "udf.html")
     )
     val transactions = parseTransactions(req_html.transactions_src)
     val details = parseDetails(req_html.details_src)
     val udf = parseUDF(req_html.udf_src)
-    FoundRequest(transactions, details, udf)
+    FoundTicket(transactions, details, udf)
   }
 
   def get_res_HTML(res: String): Node = {
