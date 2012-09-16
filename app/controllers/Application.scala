@@ -5,8 +5,7 @@ import libs.concurrent.Akka
 import play.api.mvc._
 
 import play.api.Play.current
-import models.FoundTicket
-import models.Ticket
+import models.{NotFoundTicket, FoundTicket, Ticket}
 
 object Application extends Controller {
 
@@ -35,6 +34,7 @@ object Application extends Controller {
   def present_ticket(s: Ticket) = {
     s match {
       case f: FoundTicket => Ok(views.html.ticket.found_ticket(f))
+      case n: NotFoundTicket => Ok(views.html.ticket.not_found_ticket(n))
       case _ => BadRequest
     }
   }
