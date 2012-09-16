@@ -1,16 +1,12 @@
 package models
 
-import play.api.Play._
 import java.io.{ByteArrayInputStream, InputStreamReader, InputStream}
 import xml.{Node, NodeSeq}
 import collection.immutable.{Seq, ListMap}
 import com.gargoylesoftware.htmlunit.WebClient
 import com.gargoylesoftware.htmlunit.html._
-import models.Transaction
-import models.RequestHTML
 import scala.Some
-import models.Memo
-import models.Request
+
 
 case class RequestHTML(transactions_src: Node, details_src: Node, udf_src: Node)
 
