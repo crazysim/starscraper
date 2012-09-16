@@ -5,6 +5,7 @@ import libs.concurrent.Akka
 import play.api.mvc._
 
 import play.api.Play.current
+import models.FoundRequest
 
 object Application extends Controller {
 
@@ -23,13 +24,16 @@ object Application extends Controller {
 
   def test_ticket(id: Int) = Action {
     val promiseOfSource = Akka.future {
-      models.HelpSTAR.getSampleRequest(id).toString
+      models.HelpSTAR.getSampleRequest(id)
     }
     AsyncResult {
-      promiseOfSource.map(s => Ok(s))
+      promiseOfSource.map(s =>
+        s match {
+          case f: FoundRequest => Ok(views.html.ticket.index(f))
+          case _ => BadRequest
+        }
+      )
     }
-
   }
-
 
 }
