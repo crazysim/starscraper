@@ -36,6 +36,7 @@ object HelpSTAR {
     val details_src = driver.getPageSource
     driver.get("http://resnetservice.housing.ucsb.edu/hsPages/RB_UDFTemplate.aspx?ObjectId=" + id + "&ActiveTabIndex=0&TabTobeLoaded=tabUDFs ")
     val udf_src = driver.getPageSource
+    driver.setJavascriptEnabled(false)
     driver.close()
 
     implicit def string2Node(str: String): Node = {
