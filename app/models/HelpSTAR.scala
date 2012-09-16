@@ -113,16 +113,18 @@ object HelpSTAR {
     val tr_fields = (in \\ "tr").filter(n => {
       val first_td = (n \ "td")(0)
       (first_td \ "@width").text.equals("25%") &&
-      first_td.text.nonEmpty
+        first_td.text.nonEmpty
     })
     val fields = tr_fields.map(n => {
       val tds = (n \ "td")
       val field_name = tds(0).text.trim.dropRight(1)
       val field_value = tds(1).child(0) match {
-        case inp @ <input/> => {inp \ "@value"}.text
-        case sel @ <select/> => {
+        case inp@ <input/> => {
+          inp \ "@value"
+        }.text
+        case sel@ <select/> => {
           sel.child match {
-            case opt @ <option/> if (opt \ "@selected").text.equals("selected") => opt.text
+            case opt@ <option/> if (opt \ "@selected").text.equals("selected") => opt.text
             case _ => "None Selected"
           }
         }
