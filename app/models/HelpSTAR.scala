@@ -61,7 +61,7 @@ object HelpSTAR {
 
   def getRequest(id: String, username: String, password: String): Request = {
     val req_html = getRequestHTML(id, username, password)
-    req_html.transactions_src.text match {
+    req_html.details_src.text match {
       case "" => NotFoundRequest(id)
       case _ => {
         val transactions = parseTransactions(req_html.transactions_src)
