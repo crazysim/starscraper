@@ -1,19 +1,10 @@
 import models.HelpSTAR
+import models.HelpSTAR._
 import org.specs2.mutable._
 import xml.Node
 
 
 class HelpSTARUnit extends Specification {
-
-  def get_res_HTML(res: String): Node = {
-    val is = getClass.getResourceAsStream(res)
-    HelpSTAR.readDirtyHTMLInputSteam(is)
-  }
-
-  def get_ticket_HTML(id: Int, filename: String) = {
-    get_res_HTML("/tickets/" + id + "/" + filename)
-  }
-
 
   "Detail Parsing" should {
     val properties = HelpSTAR.parseDetails(get_ticket_HTML(5432, "details.html"))

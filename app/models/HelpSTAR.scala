@@ -73,6 +73,15 @@ object HelpSTAR {
 
   }
 
+  def get_res_HTML(res: String): Node = {
+    val is = getClass.getResourceAsStream(res)
+    HelpSTAR.readDirtyHTMLInputSteam(is)
+  }
+
+  def get_ticket_HTML(id: Int, filename: String) = {
+    get_res_HTML("/tickets/" + id + "/" + filename)
+  }
+
   def readDirtyHTMLInputSteam(is: InputStream): Node = {
     val sax_parser = (new org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl).newSAXParser()
     val in = new org.xml.sax.InputSource(new InputStreamReader(is))
