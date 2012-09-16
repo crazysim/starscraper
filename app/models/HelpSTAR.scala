@@ -122,7 +122,7 @@ object HelpSTAR {
         case inp@ <input/> => {
           inp \ "@value"
         }.text
-        case sel@ <select>{b @ _*}</select> => {
+        case sel@ <select>{_*}</select> => {
           sel.child.filter(n => (n \ "@selected").nonEmpty)(0).text
         }
         case _ => "Unknown"
