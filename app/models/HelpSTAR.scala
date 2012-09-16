@@ -73,6 +73,17 @@ object HelpSTAR {
 
   }
 
+  def getSampleRequest(id: String): Request = {
+    val req_html = RequestHTML(get_ticket_HTML(5432, "transactions.html"),
+      get_ticket_HTML(5432, "details.html"),
+      get_ticket_HTML(5432, "udf.html")
+    )
+    val transactions = parseTransactions(req_html.transactions_src)
+    val details = parseDetails(req_html.details_src)
+    val udf = parseUDF(req_html.udf_src)
+    FoundRequest(transactions, details, udf)
+  }
+
   def get_res_HTML(res: String): Node = {
     val is = getClass.getResourceAsStream(res)
     HelpSTAR.readDirtyHTMLInputSteam(is)
