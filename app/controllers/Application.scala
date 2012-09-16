@@ -26,7 +26,7 @@ object Application extends Controller {
     val promiseOfSource = Akka.future {
       val username = current.configuration.getString("helpstar.username").getOrElse("No Username")
       val password = current.configuration.getString("helpstar.password").getOrElse("No Username")
-      models.HelpSTAR.getRequest("5432", username, password).toString
+      models.HelpSTAR.getRequest(id, username, password).toString
     }
     AsyncResult {
       promiseOfSource.map(s => Ok(s))
