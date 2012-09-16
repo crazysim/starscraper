@@ -1,10 +1,11 @@
 import models.HelpSTAR
 import org.specs2.mutable._
+import xml.Node
 
 
 class HelpSTARUnit extends Specification {
 
-  def get_res_HTML(res: String) = {
+  def get_res_HTML(res: String): Node = {
     val is = getClass.getResourceAsStream(res)
     HelpSTAR.readDirtyHTMLInputSteam(is)
   }
