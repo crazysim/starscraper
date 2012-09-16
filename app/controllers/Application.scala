@@ -9,7 +9,9 @@ import models.{NotFoundTicket, FoundTicket, Ticket}
 
 object Application extends Controller {
 
-  def index = TODO
+  def index = Action {
+    Ok(views.html.index())
+  }
 
   def ticket(id: Int) = Action {
     val promiseOfSource = Akka.future {
