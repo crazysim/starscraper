@@ -16,14 +16,12 @@ object Application extends Controller {
     "id" -> nonEmptyText
   )
 
-
   def index = Action {
-
-    Ok(views.html.index())
+    Ok(views.html.index(searchForm))
   }
 
   def get_ticket = Action { r =>
-    Ok("")
+    Redirect(routes.Application.ticket(5432))
   }
 
   def ticket(id: Int) = Action {

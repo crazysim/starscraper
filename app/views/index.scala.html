@@ -1,9 +1,9 @@
-@(searchForm: Form)
+@(searchForm: Form[String])
 
 @main("StarScraper") {
     <h1>StarScraper</h1>
     <p>This is a very simple scraper web application for scraping a ticket's information from HelpSTAR.</p>
     @helper.form(action = routes.Application.get_ticket) {
-
+        @helper.inputText(searchForm("id"))
     }
 }
