@@ -17,7 +17,7 @@ case class FoundRequest(transactions: Seq[Transaction], properties: ListMap[Stri
   val title = properties.getOrElse("Title", "No Title?")
 }
 
-case class NotFoundRequest(number: String) extends Request
+case class NotFoundRequest(number: Int) extends Request
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
@@ -27,7 +27,7 @@ case class Memo(kind: String, content: String)
 object HelpSTAR {
   final val nb_space = Character.toString(160.asInstanceOf[Char])
 
-  def getRequestHTML(id: String, username: String, password: String): RequestHTML = {
+  def getRequestHTML(id: Int, username: String, password: String): RequestHTML = {
     val client = new WebClient()
     client.setJavaScriptEnabled(true)
     client.setThrowExceptionOnScriptError(false)
@@ -59,7 +59,7 @@ object HelpSTAR {
     RequestHTML(transactions_src, details_src, udf_src)
   }
 
-  def getRequest(id: String, username: String, password: String): Request = {
+  def getRequest(id: Int, username: String, password: String): Request = {
     val req_html = getRequestHTML(id, username, password)
     req_html.details_src.text match {
       case "" => NotFoundRequest(id)
@@ -73,10 +73,10 @@ object HelpSTAR {
 
   }
 
-  def getSampleRequest(id: String): Request = {
-    val req_html = RequestHTML(get_ticket_HTML(5432, "transactions.html"),
-      get_ticket_HTML(5432, "details.html"),
-      get_ticket_HTML(5432, "udf.html")
+  def getSampleRequest(id: Int): Request = {
+    val req_html = RequestHTML(get_ticket_HTML(id, "transactions.html"),
+      get_ticket_HTML(id, "details.html"),
+      get_ticket_HTML(id, "udf.html")
     )
     val transactions = parseTransactions(req_html.transactions_src)
     val details = parseDetails(req_html.details_src)

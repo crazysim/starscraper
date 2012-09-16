@@ -10,7 +10,7 @@ object Application extends Controller {
 
   def index = TODO
 
-  def ticket(id: String) = Action {
+  def ticket(id: Int) = Action {
     val promiseOfSource = Akka.future {
       val username = current.configuration.getString("helpstar.username").getOrElse("No Username")
       val password = current.configuration.getString("helpstar.password").getOrElse("No Username")

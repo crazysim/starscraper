@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /ticket/:id                 controllers.Application.ticket(id)
+GET     /ticket/:id                 controllers.Application.ticket(id: Int)
 
 
 # Map static resources from the /public folder to the /assets URL path
