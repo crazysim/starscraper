@@ -17,7 +17,7 @@ case class FoundRequest(transactions: Seq[Transaction], properties: ListMap[Stri
   val title = properties.getOrElse("Title", "No Title?")
 }
 
-case class NotFoundRequest(id: String) extends Request
+case class NotFoundRequest(number: String) extends Request
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
