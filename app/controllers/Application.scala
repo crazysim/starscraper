@@ -18,13 +18,13 @@ object Application extends Controller with Secured {
 
   def index = withAuth {
     username => implicit request =>
-      Ok(views.html.index(searchForm))
+      Ok(views.html.index(searchForm, username))
   }
 
   def get_ticket = withAuth {
     username => implicit r =>
       searchForm.bindFromRequest().fold(
-        searchForm => BadRequest(views.html.index(searchForm)),
+        searchForm => BadRequest(views.html.index(searchForm, username)),
         value => Redirect(routes.Application.ticket(value))
       )
   }
