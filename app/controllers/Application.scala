@@ -13,29 +13,32 @@ import models.{NotFoundTicket, FoundTicket, Ticket}
 object Application extends Controller with Secured {
 
   val searchForm = Form(
-    "id" -> number.verifying(min(0),max(999999))
+    "id" -> number.verifying(min(0), max(999999))
   )
 
-  def index = withAuth { username => implicit request =>
-    Ok(views.html.index(searchForm))
+  def index = withAuth {
+    username => implicit request =>
+      Ok(views.html.index(searchForm))
   }
 
-  def get_ticket = Action { implicit r =>
-    searchForm.bindFromRequest().fold(
-      searchForm => BadRequest(views.html.index(searchForm)),
-      value => Redirect(routes.Application.ticket(value))
-    )
+  def get_ticket = withAuth {
+    username => implicit r =>
+      searchForm.bindFromRequest().fold(
+        searchForm => BadRequest(views.html.index(searchForm)),
+        value => Redirect(routes.Application.ticket(value))
+      )
   }
 
-  def ticket(id: Int) = Action {
-    val promiseOfSource = Akka.future {
-      val username = current.configuration.getString("helpstar.username").getOrElse("No Username")
-      val password = current.configuration.getString("helpstar.password").getOrElse("No Username")
-      models.HelpSTAR.getTicket(id, username, password)
-    }
-    AsyncResult {
-      promiseOfSource.map(present_ticket(_))
-    }
+  def ticket(id: Int) = withAuth {
+    username => implicit request =>
+      val promiseOfSource = Akka.future {
+        val HS_username = current.configuration.getString("helpstar.username").getOrElse("No Username")
+        val password = current.configuration.getString("helpstar.password").getOrElse("No Username")
+        models.HelpSTAR.getTicket(id, HS_username, password)
+      }
+      AsyncResult {
+        promiseOfSource.map(present_ticket(_))
+      }
   }
 
   def test_ticket(id: Int) = Action {
