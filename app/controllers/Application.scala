@@ -33,7 +33,7 @@ object Application extends Controller with Secured {
     username => implicit request =>
       val promiseOfSource = Akka.future {
         val HS_username = current.configuration.getString("helpstar.username").getOrElse("No Username")
-        val password = current.configuration.getString("helpstar.password").getOrElse("No Username")
+        val password = current.configuration.getString("helpstar.password").getOrElse("No Password")
         models.HelpSTAR.getTicket(id, HS_username, password)
       }
       AsyncResult {
