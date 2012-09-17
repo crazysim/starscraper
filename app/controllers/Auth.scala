@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.mvc.{Action, AsyncResult, Controller}
+import play.api.mvc.{Security, Action, AsyncResult, Controller}
 import play.api.libs.concurrent.{Redeemed, Thrown}
 import play.api.libs.openid.OpenID
 
@@ -24,7 +24,12 @@ object Auth extends Controller {
   def openIDCallBack = Action { implicit request =>
     AsyncResult(
       OpenID.verifiedId.extend( _.value match {
-        case Redeemed(info) => Ok(info.id + "\n" + info.attributes)
+        case Redeemed(info) => {
+          info.attributes.get("email") match {
+            case None => Redirect(routes.Auth.login())
+            case Some(email) => Redirect(routes.Application.index()).withSession(Security.username -> email)
+          }
+        }
         case Thrown(t) => {
           // Here you should look at the error, and give feedback to the user
           Redirect(routes.Auth.login())
@@ -33,6 +38,9 @@ object Auth extends Controller {
     )
   }
 
-  def logout = TODO
+  def logout = Action{
+    Redirect(routes.Auth.login()).withNewSession
+  }
+
 
 }
