@@ -24,7 +24,7 @@ object Auth extends Controller {
       }))
   }
 
-  def authenticate = TODO
+  def logged_out = TODO
 
   def openIDCallBack = Action {
     implicit request =>
