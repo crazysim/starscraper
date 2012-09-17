@@ -21,7 +21,17 @@ object Auth extends Controller {
 
   def authenticate = TODO
 
-  def openIDCallBack = TODO
+  def openIDCallBack = Action { implicit request =>
+    AsyncResult(
+      OpenID.verifiedId.extend( _.value match {
+        case Redeemed(info) => Ok(info.id + "\n" + info.attributes)
+        case Thrown(t) => {
+          // Here you should look at the error, and give feedback to the user
+          Redirect(routes.Auth.login())
+        }
+      })
+    )
+  }
 
   def logout = TODO
 
