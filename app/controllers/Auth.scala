@@ -1,8 +1,12 @@
 package controllers
 
-import play.api.mvc.{Security, Action, AsyncResult, Controller}
+import play.api.mvc._
 import play.api.libs.concurrent.{Redeemed, Thrown}
 import play.api.libs.openid.OpenID
+import play.api.libs.concurrent.Redeemed
+import play.api.mvc.AsyncResult
+import scala.Some
+import play.api.libs.concurrent.Thrown
 
 
 object Auth extends Controller {
@@ -45,4 +49,17 @@ object Auth extends Controller {
   }
 
 
+}
+
+trait Secured {
+
+  def username(request: RequestHeader) = request.session.get(Security.username)
+
+  def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Auth.login())
+
+  def withAuth(f: => String => Request[AnyContent] => Result) = {
+    Security.Authenticated(username, onUnauthorized) { user =>
+      Action(request => f(user)(request))
+    }
+  }
 }
