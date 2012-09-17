@@ -10,13 +10,13 @@ import play.api.data.validation.Constraints._
 import play.api.Play.current
 import models.{NotFoundTicket, FoundTicket, Ticket}
 
-object Application extends Controller {
+object Application extends Controller with Secured {
 
   val searchForm = Form(
     "id" -> number.verifying(min(0),max(999999))
   )
 
-  def index = Action {
+  def index = withAuth { username => implicit request =>
     Ok(views.html.index(searchForm))
   }
 
