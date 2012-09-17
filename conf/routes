@@ -12,7 +12,7 @@ POST    /get_ticket                     controllers.Application.get_ticket
 # Authentication
 
 GET     /login                           controllers.Auth.login
-GET     /authenticate                           controllers.Auth.authenticate
+GET     /authenticate                    controllers.Auth.authenticate
 GET     /openIDCallBack                  controllers.Auth.openIDCallBack
 GET     /logout                          controllers.Auth.logout
 
