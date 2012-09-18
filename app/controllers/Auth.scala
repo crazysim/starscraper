@@ -24,7 +24,9 @@ object Auth extends Controller {
       }))
   }
 
-  def logged_out = TODO
+  def logged_out = Action {
+    Ok(views.html.logged_out())
+  }
 
   def openIDCallBack = Action {
     implicit request =>
@@ -45,7 +47,7 @@ object Auth extends Controller {
   }
 
   def logout = Action {
-    Redirect(routes.Auth.login()).withNewSession
+    Redirect(routes.Auth.logged_out()).withNewSession
   }
 
 
@@ -55,7 +57,7 @@ trait Secured {
 
   def username(request: RequestHeader) = request.session.get(Security.username)
 
-  def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Auth.login())
+  def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Auth.logged_out())
 
   def withAuth(f: => String => Request[AnyContent] => Result) = {
     Security.Authenticated(username, onUnauthorized) { user =>
