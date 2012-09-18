@@ -20,7 +20,7 @@ object Auth extends Controller {
       )
         .extend(_.value match {
         case Redeemed(url) => Redirect(url)
-        case Thrown(t) => Redirect(routes.Auth.login())
+        case Thrown(t) => Redirect(routes.Auth.logged_out()).withNewSession
       }))
   }
 
