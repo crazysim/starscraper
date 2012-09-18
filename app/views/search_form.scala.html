@@ -1,0 +1,5 @@
+@(searchForm: Form[Int])
+
+@helper.form(action = routes.Application.get_ticket(), 'id -> "queryForm") {
+    @helper.inputText(searchForm("id"))
+}

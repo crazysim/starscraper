@@ -1,6 +1,9 @@
-@(request: FoundTicket)
+@(searchForm: Form[Int], request: FoundTicket)
 
 @main("Ticket #" + request.number) {
+    @search_form(searchForm)
+    <a href="@routes.Auth.logout()">Logout</a>
+
     <h1>Ticket #@request.number: @request.title</h1>
     <h2>Details</h2>
     @request.properties.map { p =>

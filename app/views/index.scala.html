@@ -4,8 +4,6 @@
     <h1>StarScraper</h1>
     <h6>@username</h6>
     <p>This is a very simple scraper web application for scraping a ticket's information from HelpSTAR.</p>
-    @helper.form(action = routes.Application.get_ticket(), 'id -> "queryForm") {
-        @helper.inputText(searchForm("id"))
-    }
+    @search_form(searchForm)
     <a href="@routes.Auth.logout()">Logout</a>
 }
