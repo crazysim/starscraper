@@ -40,7 +40,7 @@ object Auth extends Controller {
           }
           case Thrown(t) => {
             // Here you should look at the error, and give feedback to the user
-            case Thrown(t) => Redirect(routes.Auth.logged_out()).withNewSession
+            Redirect(routes.Auth.logged_out()).withNewSession
           }
         })
       )
