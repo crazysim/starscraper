@@ -13,7 +13,7 @@ import models.{NotFoundTicket, FoundTicket, Ticket}
 object Application extends Controller with Secured {
 
   val searchForm = Form(
-    "id" -> number.verifying(min(0), max(999999))
+    "id" -> number.verifying(min(0))
   )
 
   def index = withAuth {
