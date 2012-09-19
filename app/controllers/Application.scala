@@ -8,7 +8,7 @@ import play.api.data._
 import play.api.data.validation.Constraints._
 
 import play.api.Play.current
-import models.{NotFoundTicket, FoundTicket, Ticket}
+import models.{UnAuthorizedTicket, NotFoundTicket, FoundTicket, Ticket}
 
 object Application extends Controller with Secured {
 
@@ -54,6 +54,7 @@ object Application extends Controller with Secured {
     s match {
       case f: FoundTicket => Ok(views.html.ticket.found_ticket(searchForm, f))
       case n: NotFoundTicket => Ok(views.html.ticket.not_found_ticket(searchForm, n))
+      case u: UnAuthorizedTicket => Ok(views.html.ticket.unauthorized_ticket(searchForm, u))
       case _ => BadRequest
     }
   }

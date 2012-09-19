@@ -18,6 +18,7 @@ case class FoundTicket(transactions: Seq[Transaction], properties: ListMap[Strin
 }
 
 case class NotFoundTicket(number: Int) extends Ticket
+case class UnAuthorizedTicket(number: Int) extends Ticket
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 
@@ -63,6 +64,7 @@ object HelpSTAR {
     val req_html = getTicketHTML(id, username, password)
     req_html.details_src.text match {
       case "" => NotFoundTicket(id)
+      case "You are not authorized to access this request." => UnAuthorizedTicket(id)
       case _ => {
         val transactions = parseTransactions(req_html.transactions_src)
         val details = parseDetails(req_html.details_src)
