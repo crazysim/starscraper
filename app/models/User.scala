@@ -3,6 +3,7 @@ package models
 import play.api.db.DB
 import anorm._
 import anorm.SqlParser._
+import play.api.Play.current
 
 object User {
   def isAuthorized(email: String): Boolean = {
