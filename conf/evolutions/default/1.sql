@@ -2,11 +2,11 @@
 
 # --- !Ups
 
-CREATE TABLE user (
-    "id" SERIAL;
-    "email" varchar(255) NOT NULL;
+CREATE TABLE users (
+    "id" SERIAL NOT NULL,
+    "email" varchar(255) NOT NULL
 );
 
 # --- !Downs
 
-DROP TABLE user;
+DROP TABLE users;
