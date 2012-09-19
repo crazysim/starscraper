@@ -3,4 +3,5 @@
 @helper.form(action = routes.Application.get_ticket(), args= 'id-> "queryForm") {
     @helper.input(searchForm("id")) { (id, name, value, args) =>
         <input type="number" name="@name" id="@id" @toHtmlArgs(args)>
+        <input type="submit" name="mysubmit" value="Lookup!" />
     } }
