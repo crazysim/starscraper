@@ -35,7 +35,12 @@ object Auth extends Controller {
           case Redeemed(info) => {
             info.attributes.get("email") match {
               case None => Redirect(routes.Auth.login())
-              case Some(email) => Redirect(routes.Application.index()).withSession(Security.username -> email)
+              case Some(email) => {
+                models.User.isAuthorized(email) match {
+                  case true => Redirect(routes.Application.index()).withSession(Security.username -> email)
+                  case false => Redirect(routes.Auth.logged_out()).withNewSession
+                }
+              }
             }
           }
           case Thrown(t) => {
