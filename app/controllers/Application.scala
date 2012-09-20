@@ -31,12 +31,14 @@ object Application extends Controller with Secured {
         searchForm => BadRequest(views.html.index(searchForm, username)),
         value => {
           value._2 match {
-            case "Email" => Redirect(routes.Application.ticket(value._1))
+            case "Email" => Redirect(routes.Application.email_ticket(value._1))
             case _ => Redirect(routes.Application.ticket(value._1))
           }
         }
       )
   }
+
+  def email_ticket(id: Int) = ticket(id, email = true)
 
   def ticket(id: Int, email: Boolean = false) = withAuth {
     username => implicit request =>
@@ -63,9 +65,10 @@ object Application extends Controller with Secured {
     s match {
       case f: FoundTicket => {
         if (email) {
-
+          Ok((views.html.ticket.web_ticket(searchForm, f, "Emailed")))
+        } else {
+          Ok((views.html.ticket.web_ticket(searchForm, f)))
         }
-        Ok((views.html.ticket.web_ticket(searchForm, f)))
       }
       case n: NotFoundTicket => Ok(views.html.ticket.web_ticket(searchForm, n, "Not Found"))
       case u: UnAuthorizedTicket => Ok(views.html.ticket.web_ticket(searchForm, u, "Unauthorized"))
