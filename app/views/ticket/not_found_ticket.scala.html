@@ -1,8 +1,0 @@
-@(searchForm: Form[(Int, String)], request: NotFoundTicket)
-
-@main("Ticket #" + request.number) {
-    @search_form(searchForm)
-    <a href="@routes.Auth.logout()">Logout</a>
-
-    <h1>Ticket Not Found</h1>
-}
