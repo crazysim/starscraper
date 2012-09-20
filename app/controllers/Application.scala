@@ -6,7 +6,7 @@ import play.api.mvc._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation.Constraints._
-import com.typesafe.plugin.use
+import com.typesafe.plugin.{MailerPlugin, use}
 
 import play.api.Play.current
 import models.{UnAuthorizedTicket, NotFoundTicket, FoundTicket, Ticket}
@@ -48,7 +48,7 @@ object Application extends Controller with Secured {
         models.HelpSTAR.getTicket(id, HS_username, password)
       }
       AsyncResult {
-        promiseOfSource.map(present_ticket(_, email))
+        promiseOfSource.map(present_ticket(_, email, username))
       }
   }
 
@@ -61,10 +61,16 @@ object Application extends Controller with Secured {
     }
   }
 
-  def present_ticket(s: Ticket, email: Boolean = false) = {
+  def present_ticket(s: Ticket, email: Boolean = false, email_address:String = "") = {
     s match {
       case f: FoundTicket => {
         if (email) {
+          val mail = use[MailerPlugin].email
+          mail.setSubject(f.number + ": " + f.title)
+          mail.addRecipient(email_address)
+          mail.addFrom("StarScraper <ucsbresnetvoice@gmail.com>")
+          mail.sendHtml(views.html.main("Report")(views.html.ticket.ticket(f)).toString())
+
           Ok((views.html.ticket.web_ticket(searchForm, f, "Emailed")))
         } else {
           Ok((views.html.ticket.web_ticket(searchForm, f)))
