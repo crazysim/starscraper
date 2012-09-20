@@ -68,7 +68,7 @@ object Application extends Controller with Secured {
           val mail = use[MailerPlugin].email
           mail.setSubject("StarScraper - " + f.number + ": " + f.title)
           mail.addRecipient(email_address)
-          mail.addFrom("StarScraper <ucsbresnetvoice@gmail.com>")
+          mail.addFrom("StarScraper <crazysim+starscraper@gmail.com>")
           mail.sendHtml(views.html.main("Report")(views.html.ticket.ticket(f)).toString())
 
           Ok((views.html.ticket.web_ticket(searchForm, f, "Emailed")))
