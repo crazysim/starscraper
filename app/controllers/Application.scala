@@ -66,7 +66,7 @@ object Application extends Controller with Secured {
       case f: FoundTicket => {
         if (email) {
           val mail = use[MailerPlugin].email
-          mail.setSubject(f.number + ": " + f.title)
+          mail.setSubject("StarScraper - " + f.number + ": " + f.title)
           mail.addRecipient(email_address)
           mail.addFrom("StarScraper <ucsbresnetvoice@gmail.com>")
           mail.sendHtml(views.html.main("Report")(views.html.ticket.ticket(f)).toString())
