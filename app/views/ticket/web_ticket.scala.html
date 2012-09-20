@@ -1,0 +1,9 @@
+@(searchForm: Form[(Int, String)], request: Ticket)
+@import models._
+
+@main("Ticket #" + request.number) {
+    @search_form(searchForm)
+    <a href="@routes.Auth.logout()">Logout</a>
+
+    @request match {case f:FoundTicket => @ticket(f) case _ => ""}
+}

@@ -4,23 +4,5 @@
     @search_form(searchForm)
     <a href="@routes.Auth.logout()">Logout</a>
 
-    <h1>Ticket #@request.number: @request.title</h1>
-    <h2>Details</h2>
-    @request.properties.map { p =>
-        <p>@p._1 - @p._2</p>
-    }
-    <h2>User Defined Fields</h2>
-    @request.user_defined_fields.map { udf =>
-        <p>@udf._1 - @udf._2</p>
-    }
-    <h2>Transactions (Oldest First)</h2>
-    @request.transactions.map { t =>
-        <hr/>
-        <h4>@t.who - @t.department - @t.time</h4>
-        @t.memos.map { m =>
-            <h5>@m.kind</h5>
-            <p>@Html(m.content)</p>
-        }
-        <hr/>
-    }
+    @ticket(request)
 }
