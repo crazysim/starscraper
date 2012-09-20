@@ -12,7 +12,8 @@ object ApplicationBuild extends Build {
       "org.apache.httpcomponents" % "httpclient" % "4.2.1",
       "net.sourceforge.htmlunit" % "htmlunit" % "2.10",
       "org.ccil.cowan.tagsoup" % "tagsoup" % "1.2.1",
-      "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+      "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
+      "com.typesafe" %% "play-plugins-mailer" % "2.0.4"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
