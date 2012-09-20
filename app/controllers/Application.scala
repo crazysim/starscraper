@@ -37,7 +37,7 @@ object Application extends Controller with Secured {
       )
   }
 
-  def ticket(id: Int) = withAuth {
+  def ticket(id: Int, email: Boolean = false) = withAuth {
     username => implicit request =>
       val promiseOfSource = Akka.future {
         val HS_username = current.configuration.getString("helpstar.username").getOrElse("No Username")
@@ -45,7 +45,7 @@ object Application extends Controller with Secured {
         models.HelpSTAR.getTicket(id, HS_username, password)
       }
       AsyncResult {
-        promiseOfSource.map(present_ticket(_))
+        promiseOfSource.map(present_ticket(_, email))
       }
   }
 
@@ -58,9 +58,14 @@ object Application extends Controller with Secured {
     }
   }
 
-  def present_ticket(s: Ticket) = {
+  def present_ticket(s: Ticket, email: Boolean = false) = {
     s match {
-      case f: FoundTicket => Ok(views.html.ticket.web_ticket(searchForm, f))
+      case f: FoundTicket => {
+        if (email) {
+
+        }
+        Ok((views.html.ticket.web_ticket(searchForm, f)))
+      }
       case n: NotFoundTicket => Ok(views.html.ticket.web_ticket(searchForm, n, "Not Found"))
       case u: UnAuthorizedTicket => Ok(views.html.ticket.web_ticket(searchForm, u, "Unauthorized"))
       case _ => BadRequest
