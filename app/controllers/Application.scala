@@ -60,7 +60,7 @@ object Application extends Controller with Secured {
 
   def present_ticket(s: Ticket) = {
     s match {
-      case f: FoundTicket => Ok(views.html.ticket.found_ticket(searchForm, f))
+      case f: FoundTicket => Ok(views.html.ticket.web_ticket(searchForm, f))
       case n: NotFoundTicket => Ok(views.html.ticket.not_found_ticket(searchForm, n))
       case u: UnAuthorizedTicket => Ok(views.html.ticket.unauthorized_ticket(searchForm, u))
       case _ => BadRequest

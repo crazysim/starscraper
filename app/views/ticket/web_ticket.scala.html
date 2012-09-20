@@ -1,9 +1,16 @@
-@(searchForm: Form[(Int, String)], request: Ticket)
+@(searchForm: Form[(Int, String)], request: Ticket, flash: String = "")
 @import models._
 
 @main("Ticket #" + request.number) {
     @search_form(searchForm)
     <a href="@routes.Auth.logout()">Logout</a>
 
-    @request match {case f:FoundTicket => @ticket(f) case _ => ""}
+    <p>@flash</p>
+
+    @request match {
+        @case f:FoundTicket => @ticket(f)
+        @case UnAuthorizedTicket => "Not Authorized"
+        @case NotFoundTicket => "Not Found"
+        @case _ => ""
+    }
 }
