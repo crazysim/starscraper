@@ -1,4 +1,4 @@
-@(searchForm: Form[Int])
+@(searchForm: Form[(Int, String)])
 
 @helper.form(action = routes.Application.get_ticket(), args= 'id-> "queryForm") {
     @helper.input(searchForm("id")) { (id, name, value, args) =>

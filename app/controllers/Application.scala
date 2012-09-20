@@ -13,7 +13,10 @@ import models.{UnAuthorizedTicket, NotFoundTicket, FoundTicket, Ticket}
 object Application extends Controller with Secured {
 
   val searchForm = Form(
-    "id" -> number.verifying(min(0))
+    tuple(
+      "id" -> number.verifying(min(0)),
+      "lookup" -> text
+    )
   )
 
   def index = withAuth {
@@ -25,7 +28,12 @@ object Application extends Controller with Secured {
     username => implicit r =>
       searchForm.bindFromRequest().fold(
         searchForm => BadRequest(views.html.index(searchForm, username)),
-        value => Redirect(routes.Application.ticket(value))
+        value => {
+          value._2 match {
+            case "Email" => Redirect(routes.Application.ticket(value._1))
+            case _ => Redirect(routes.Application.ticket(value._1))
+          }
+        }
       )
   }
 

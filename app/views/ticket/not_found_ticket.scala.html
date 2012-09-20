@@ -1,4 +1,4 @@
-@(searchForm: Form[Int], request: NotFoundTicket)
+@(searchForm: Form[(Int, String)], request: NotFoundTicket)
 
 @main("Ticket #" + request.number) {
     @search_form(searchForm)
