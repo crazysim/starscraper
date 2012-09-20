@@ -7,6 +7,7 @@ import play.api.libs.concurrent.Redeemed
 import play.api.mvc.AsyncResult
 import scala.Some
 import play.api.libs.concurrent.Thrown
+import play.api.Play.current
 
 
 object Auth extends Controller {
@@ -14,8 +15,9 @@ object Auth extends Controller {
   def login = Action {
     implicit r =>
       val openid = "https://www.google.com/accounts/o8/id"
+      val secure =  current.configuration.getBoolean("openid.securecallback").getOrElse(false)
       AsyncResult(OpenID.redirectURL(openid,
-        routes.Auth.openIDCallBack().absoluteURL(),
+        routes.Auth.openIDCallBack().absoluteURL(secure = secure),
         Seq("email" -> "http://schema.openid.net/contact/email")
       )
         .extend(_.value match {
