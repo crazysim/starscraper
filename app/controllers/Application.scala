@@ -8,6 +8,7 @@ import play.api.data._
 import play.api.data.validation.Constraints._
 import com.typesafe.plugin.{MailerPlugin, use}
 
+
 import play.api.Play.current
 import models.{UnAuthorizedTicket, NotFoundTicket, FoundTicket, Ticket}
 
