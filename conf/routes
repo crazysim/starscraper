@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index
 GET     /ticket/:id                 controllers.Application.ticket(id: Int)
+GET     /email_ticket/:id           controllers.Application.email_ticket(id: Int)
 GET     /test_ticket/:id            controllers.Application.test_ticket(id: Int)
 
 POST    /get_ticket                     controllers.Application.get_ticket

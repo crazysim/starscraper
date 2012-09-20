@@ -10,15 +10,17 @@ import scala.Some
 
 case class TicketHTML(transactions_src: Node, details_src: Node, udf_src: Node)
 
-abstract class Ticket()
+abstract class Ticket() {
+  val number = 0
+}
 
 case class FoundTicket(transactions: Seq[Transaction], properties: ListMap[String, String], user_defined_fields: ListMap[String, String]) extends Ticket{
-  val number = properties.getOrElse("Number", "No Number?")
+  override val number = properties.get("Number").get.toInt
   val title = properties.getOrElse("Title", "No Title?")
 }
 
-case class NotFoundTicket(number: Int) extends Ticket
-case class UnAuthorizedTicket(number: Int) extends Ticket
+case class NotFoundTicket(override val number: Int) extends Ticket
+case class UnAuthorizedTicket(override val number: Int) extends Ticket
 
 case class Transaction(who: String, department: String, time: String, memos: List[Memo])
 

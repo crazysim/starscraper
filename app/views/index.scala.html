@@ -1,9 +1,9 @@
-@(searchForm: Form[Int], username: String)
+@(searchForm: Form[(Int, String)], username: String)
 
 @main("StarScraper") {
     <h1>StarScraper</h1>
     <h6>@username</h6>
-    <p>This is a very simple scraper web application for scraping a ticket's information from HelpSTAR.</p>
+    <p>This is a very simple and rough scraper web application for scraping a ticket's information from HelpSTAR for emailing to yourself or lookup, fast.</p>
     @search_form(searchForm)
     <a href="@routes.Auth.logout()">Logout</a>
 }

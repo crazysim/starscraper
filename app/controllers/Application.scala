@@ -6,6 +6,7 @@ import play.api.mvc._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation.Constraints._
+import com.typesafe.plugin.{MailerPlugin, use}
 
 import play.api.Play.current
 import models.{UnAuthorizedTicket, NotFoundTicket, FoundTicket, Ticket}
@@ -13,7 +14,10 @@ import models.{UnAuthorizedTicket, NotFoundTicket, FoundTicket, Ticket}
 object Application extends Controller with Secured {
 
   val searchForm = Form(
-    "id" -> number.verifying(min(0))
+    tuple(
+      "id" -> number.verifying(min(0)),
+      "lookup" -> text
+    )
   )
 
   def index = withAuth {
@@ -25,11 +29,18 @@ object Application extends Controller with Secured {
     username => implicit r =>
       searchForm.bindFromRequest().fold(
         searchForm => BadRequest(views.html.index(searchForm, username)),
-        value => Redirect(routes.Application.ticket(value))
+        value => {
+          value._2 match {
+            case "Email" => Redirect(routes.Application.email_ticket(value._1))
+            case _ => Redirect(routes.Application.ticket(value._1))
+          }
+        }
       )
   }
 
-  def ticket(id: Int) = withAuth {
+  def email_ticket(id: Int) = ticket(id, email = true)
+
+  def ticket(id: Int, email: Boolean = false) = withAuth {
     username => implicit request =>
       val promiseOfSource = Akka.future {
         val HS_username = current.configuration.getString("helpstar.username").getOrElse("No Username")
@@ -37,7 +48,7 @@ object Application extends Controller with Secured {
         models.HelpSTAR.getTicket(id, HS_username, password)
       }
       AsyncResult {
-        promiseOfSource.map(present_ticket(_))
+        promiseOfSource.map(present_ticket(_, email, username))
       }
   }
 
@@ -50,11 +61,23 @@ object Application extends Controller with Secured {
     }
   }
 
-  def present_ticket(s: Ticket) = {
+  def present_ticket(s: Ticket, email: Boolean = false, email_address:String = "") = {
     s match {
-      case f: FoundTicket => Ok(views.html.ticket.found_ticket(searchForm, f))
-      case n: NotFoundTicket => Ok(views.html.ticket.not_found_ticket(searchForm, n))
-      case u: UnAuthorizedTicket => Ok(views.html.ticket.unauthorized_ticket(searchForm, u))
+      case f: FoundTicket => {
+        if (email) {
+          val mail = use[MailerPlugin].email
+          mail.setSubject(f.number + ": " + f.title)
+          mail.addRecipient(email_address)
+          mail.addFrom("StarScraper <ucsbresnetvoice@gmail.com>")
+          mail.sendHtml(views.html.main("Report")(views.html.ticket.ticket(f)).toString())
+
+          Ok((views.html.ticket.web_ticket(searchForm, f, "Emailed")))
+        } else {
+          Ok((views.html.ticket.web_ticket(searchForm, f)))
+        }
+      }
+      case n: NotFoundTicket => Ok(views.html.ticket.web_ticket(searchForm, n, "Not Found"))
+      case u: UnAuthorizedTicket => Ok(views.html.ticket.web_ticket(searchForm, u, "Unauthorized"))
       case _ => BadRequest
     }
   }
