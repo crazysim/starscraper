@@ -8,9 +8,7 @@
     <p>@flash</p>
 
     @request match {
-        @case f:FoundTicket => @ticket(f)
-        @case UnAuthorizedTicket => "Not Authorized"
-        @case NotFoundTicket => "Not Found"
-        @case _ => ""
+        case f:FoundTicket => {@ticket(f)}
+        case _ => {}
     }
 }
