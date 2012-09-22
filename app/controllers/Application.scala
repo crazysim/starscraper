@@ -42,7 +42,16 @@ object Application extends Controller with Secured {
       )
   }
 
-  def email_ticket(id: Int) = ticket(id, email = true)
+  def email_ticket(id: Int) = withAuth {
+    username => implicit request =>
+      val promiseOfSource = Akka.future {
+        pull_ticket(id)
+      }
+      AsyncResult {
+        promiseOfSource.map(present_ticket(_, true, username))
+      }
+      Redirect(routes.Application.ticket(id))
+  }
 
   def ticket(id: Int, email: Boolean = false) = withAuth {
     username => implicit request =>
@@ -50,7 +59,7 @@ object Application extends Controller with Secured {
         pull_ticket(id)
       }
       AsyncResult {
-        promiseOfSource.map(present_ticket(_, email, username))
+        promiseOfSource.map(present_ticket(_, false, username))
       }
   }
 
