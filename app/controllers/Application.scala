@@ -12,6 +12,9 @@ import com.typesafe.plugin.{MailerPlugin, use}
 import play.api.Play.current
 import models.{UnAuthorizedTicket, NotFoundTicket, FoundTicket, Ticket}
 
+import play.api.cache.Cache
+
+
 object Application extends Controller with Secured {
 
   val searchForm = Form(
@@ -39,18 +42,33 @@ object Application extends Controller with Secured {
       )
   }
 
-  def email_ticket(id: Int) = ticket(id, email = true)
+  def email_ticket(id: Int) = withAuth {
+    username => implicit request =>
+      val promiseOfSource = Akka.future {
+        pull_ticket(id)
+      }
+      AsyncResult {
+        promiseOfSource.map(present_ticket(_, true, username))
+      }
+      Redirect(routes.Application.ticket(id))
+  }
 
   def ticket(id: Int, email: Boolean = false) = withAuth {
     username => implicit request =>
       val promiseOfSource = Akka.future {
-        val HS_username = current.configuration.getString("helpstar.username").getOrElse("No Username")
-        val password = current.configuration.getString("helpstar.password").getOrElse("No Password")
-        models.HelpSTAR.getTicket(id, HS_username, password)
+        pull_ticket(id)
       }
       AsyncResult {
-        promiseOfSource.map(present_ticket(_, email, username))
+        promiseOfSource.map(present_ticket(_, false, username))
       }
+  }
+
+  def pull_ticket(id: Int) = {
+    val HS_username = current.configuration.getString("helpstar.username").getOrElse("No Username")
+    val password = current.configuration.getString("helpstar.password").getOrElse("No Password")
+    Cache.getOrElse("ticket." + id, 30)(
+      models.HelpSTAR.getTicket(id, HS_username, password)
+    )
   }
 
   def test_ticket(id: Int) = Action {
