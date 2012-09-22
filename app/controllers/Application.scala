@@ -48,9 +48,13 @@ object Application extends Controller with Secured {
         pull_ticket(id)
       }
       AsyncResult {
-        promiseOfSource.map(present_ticket(_, true, username))
+        promiseOfSource.map( t =>
+        {
+          present_ticket(t, true, username)
+          Redirect(routes.Application.ticket(id))
+        }
+        )
       }
-      Redirect(routes.Application.ticket(id))
   }
 
   def ticket(id: Int, email: Boolean = false) = withAuth {
