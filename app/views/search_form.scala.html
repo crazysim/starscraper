@@ -1,11 +1,11 @@
 @(searchForm: Form[(Int, String)])
 @import helper.twitterBootstrap._
 
-@helper.form(action = routes.Application.get_ticket(), args= 'id-> "queryForm") {
+@helper.form(routes.Application.get_ticket(), 'id-> "queryForm", 'class -> "") {
     @helper.input(searchForm("id")) { (id, name, value, args) =>
-        <input type="number" name="@name" id="@id" autofocus="autofocus" @toHtmlArgs(args)>
+        <input type="number" name="@name" id="@id" autofocus="autofocus" class="span3 search-query"@toHtmlArgs(args)>
     }
-    <button type="submit" name="lookup" value="Lookup">Lookup</button>
-    <button type="submit" name="lookup" value="Email">Email</button>
+    <button type="submit" name="lookup" value="Lookup" class="btn">Lookup</button>
+    <button type="submit" name="lookup" value="Email" class="btn">Email</button>
 
 }
