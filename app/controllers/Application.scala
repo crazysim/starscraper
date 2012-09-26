@@ -57,7 +57,7 @@ object Application extends Controller with Secured {
       }
   }
 
-  def ticket_short(id: Int) = {
+  def ticket_short(id: Int) = Action {
     Redirect(routes.Application.ticket(id))
   }
 
