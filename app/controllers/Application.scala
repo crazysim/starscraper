@@ -57,6 +57,10 @@ object Application extends Controller with Secured {
       }
   }
 
+  def ticket_short(id: Int) = {
+    Redirect(routes.Application.ticket(id))
+  }
+
   def ticket(id: Int, email: Boolean = false) = withAuth {
     username => implicit request =>
       val promiseOfSource = Akka.future {
